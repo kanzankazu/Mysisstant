@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Catatan Ku</string>
+    <string name="powered_by_hallo_arif">Powered by hallo arif</string>
+    <string name="PT_Hallo_Arif_Gemilang">\\u00A9 2017 PT. Hallo Arif Gemilang</string>
+    <string name="error_audio_recorder">Audio recorder error: %1$s</string>
+</resources>

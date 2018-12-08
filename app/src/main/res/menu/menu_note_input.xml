@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuNoteInputChangeColor"
+        android:icon="@drawable/ic_image_black"
+        android:orderInCategory="100"
+        android:title="Change Background"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuNoteInputShare"
+        android:icon="@drawable/ic_menu_share"
+        android:orderInCategory="100"
+        android:title="Share"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menuNoteInputAddFriend"
+        android:orderInCategory="100"
+        android:title="Add Friend"
+        app:showAsAction="never" />
+</menu>

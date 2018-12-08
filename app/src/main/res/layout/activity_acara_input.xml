@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.AlarmActivity">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsvAcaraInput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@color/common_google_signin_btn_text_light_disabled">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/focus_thief"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp">
+
+                <EditText
+                    android:id="@+id/etAcaraInputJudul"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="JUDUL ACARA"
+                    android:padding="5dp"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvAcaraInputDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:elevation="5dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Waktu Mulai"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <com.rm.rmswitch.RMSwitch
+                            android:id="@+id/rmsAcaraInputMulai"
+                            android:layout_width="75dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            app:checked="false"
+                            app:forceAspectRatio="true"
+                            app:switchBkgCheckedColor="@color/colorAccent"
+                            app:switchBkgNotCheckedColor="@color/colorPrimary"
+                            app:switchDesign="android"
+                            app:switchToggleCheckedColor="@color/colorPrimary"
+                            app:switchToggleCheckedImage="@drawable/ic_moon_white"
+                            app:switchToggleNotCheckedColor="@color/colorAccent"
+                            app:switchToggleNotCheckedImage="@drawable/ic_sun_white" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jam"
+                        android:textStyle="bold" />
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/bsbAcaraInputMulaiJam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bsb_auto_adjust_section_mark="true"
+                        app:bsb_max="12"
+                        app:bsb_min="0"
+                        app:bsb_section_count="12"
+                        app:bsb_section_text_position="below_section_mark" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Menit"
+                        android:textStyle="bold" />
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/bsbAcaraInputMulaiMenit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bsb_max="60"
+                        app:bsb_min="0"
+                        app:bsb_section_count="12"
+                        app:bsb_section_text_interval="1"
+                        app:bsb_section_text_position="below_section_mark" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Waktu Selesai"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:animateLayoutChanges="true"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <com.rm.rmswitch.RMSwitch
+                            android:id="@+id/rmsAcaraInputSelesai"
+                            android:layout_width="75dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:checked="false"
+                            app:forceAspectRatio="true"
+                            app:switchBkgCheckedColor="@color/colorAccent"
+                            app:switchBkgNotCheckedColor="@color/colorPrimary"
+                            app:switchDesign="android"
+                            app:switchToggleCheckedColor="@color/colorPrimary"
+                            app:switchToggleCheckedImage="@drawable/ic_moon_white"
+                            app:switchToggleNotCheckedColor="@color/colorAccent"
+                            app:switchToggleNotCheckedImage="@drawable/ic_sun_white" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jam"
+                        android:textStyle="bold" />
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/bsbAcaraInputSelesaiJam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bsb_auto_adjust_section_mark="true"
+                        app:bsb_max="12"
+                        app:bsb_min="0"
+                        app:bsb_section_count="12"
+                        app:bsb_section_text_position="below_section_mark" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Menit"
+                        android:textStyle="bold" />
+
+                    <com.xw.repo.BubbleSeekBar
+                        android:id="@+id/bsbAcaraInputSelesaiMenit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bsb_max="60"
+                        app:bsb_min="0"
+                        app:bsb_section_count="12"
+                        app:bsb_section_text_interval="1"
+                        app:bsb_section_text_position="below_section_mark" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/llAcaraInputLokasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:animateLayoutChanges="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_location_black" />
+
+                        <TextView
+                            android:id="@+id/tvAcaraInputLokasi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:text="Lokasi" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAcaraInputTeman"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_person_black" />
+
+                        <TextView
+                            android:id="@+id/tvAcaraInputTeman"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:text="Undang Teman" />
+                    </LinearLayout>
+
+                    <Spinner
+                        android:id="@+id/spAcaraInputMenitPengingat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:animateLayoutChanges="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/ibAcaraInputFakeCall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_call_black" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/ibAcaraInputPopUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_circle_black" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
+                        <ImageButton
+                            android:id="@+id/ibAcaraInputRingtone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_music_black" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llAcaraInputEvaluasi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Pengingat untuk evaluasi" />
+
+                        <CheckBox
+                            android:id="@+id/cbAcaraInputEvaluasi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:text="" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/bAcaraInputBuat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_radius"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Buat Sekarang"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
