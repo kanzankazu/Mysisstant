@@ -6,12 +6,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.QuickContactBadge;
 
 import id.co.halloarif.catatanku.R;
+import id.co.halloarif.catatanku.support.util.SystemUtil;
+import id.co.halloarif.catatanku.support.widget.OnSwipeTouchListener;
 
 public class AlarmSummaryActivity extends AppCompatActivity {
 
     private FloatingActionButton fabAlarmSummary;
+    private RecyclerView rvAlarmSummary;
+    private ImageView ivAlarmSummaryCreatefvbi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +35,8 @@ public class AlarmSummaryActivity extends AppCompatActivity {
 
     private void initComponent() {
         fabAlarmSummary = (FloatingActionButton) findViewById(R.id.fabAlarmSummary);
-        RecyclerView rvAlarmSummary = (RecyclerView) findViewById(R.id.rvAlarmSummary);
-
+        rvAlarmSummary = (RecyclerView) findViewById(R.id.rvAlarmSummary);
+        ivAlarmSummaryCreatefvbi = (ImageView) findViewById(R.id.ivAlarmSummaryCreate);
     }
 
     private void initParam() {
@@ -50,6 +56,36 @@ public class AlarmSummaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 moveToAlarm();
+            }
+        });
+
+        ivAlarmSummaryCreatefvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveToAlarm();
+            }
+        });
+
+        ivAlarmSummaryCreatefvbi.setOnTouchListener(new OnSwipeTouchListener(AlarmSummaryActivity.this){
+            @Override
+            public void onSwipeRight() {
+                super.onSwipeRight();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                super.onSwipeLeft();
+            }
+
+            @Override
+            public void onSwipeTop() {
+                super.onSwipeTop();
+                moveToAlarm();
+            }
+
+            @Override
+            public void onSwipeBottom() {
+                super.onSwipeBottom();
             }
         });
     }

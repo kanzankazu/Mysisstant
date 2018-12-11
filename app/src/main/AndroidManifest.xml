@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".App"
@@ -58,7 +59,31 @@
         <activity
             android:name=".view.NoteFriendDetailActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".view.RecordingActivity"></activity>
+        <activity android:name=".view.RecordingActivity" />
+
+        <service
+            android:name=".service.PopupService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".view.adapter.GoogleMapsActivity" />
+
+        <service
+            android:name=".service.SpeakService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".service.Alarm"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".view.ListContactPickerCheckBox"></activity>
     </application>
 
 </manifest>
