@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="id.co.halloarif.catatanku">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,6 +11,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission
+        android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".App"
@@ -18,9 +24,31 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <service
+            android:name=".service.PopupService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".service.SpeakService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".service.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".service.Alarm"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
-            android:name=".view.LogRegActivity"
+            android:name=".view.activity.LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +56,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".view.activity.IntroActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".view.activity.ForgetPasswordActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".view.activity.IntroSuccessActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+
+        <activity
+            android:name=".view.LogRegActivity"
+            android:theme="@style/AppTheme.FullScreen"></activity>
         <activity
             android:name=".view.MainActivity"
             android:label="@string/title_activity_main"
@@ -59,31 +104,13 @@
         <activity
             android:name=".view.NoteFriendDetailActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".view.RecordingActivity" />
-
-        <service
-            android:name=".service.PopupService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <receiver
-            android:name=".service.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name=".view.adapter.GoogleMapsActivity" />
-
-        <service
-            android:name=".service.SpeakService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <receiver
-            android:name=".service.Alarm"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name=".view.ListContactPickerCheckBox"></activity>
+        <activity
+            android:name=".view.RecordingActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".view.adapter.GoogleMapsActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name=".view.ListContactPickerCheckBox" />
     </application>
 
 </manifest>

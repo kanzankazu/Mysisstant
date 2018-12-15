@@ -27,14 +27,14 @@ public class AlarmSummaryRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return 0;
     }
 
+    interface AlarmSummaryRVListener {
+        void test();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    interface AlarmSummaryRVListener {
-        void test();
     }
 }

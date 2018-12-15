@@ -28,8 +28,6 @@ public class NoteSummaryActivity extends AppCompatActivity {
         initContent();
         initListener();
 
-
-
     }
 
     private void initComponent() {

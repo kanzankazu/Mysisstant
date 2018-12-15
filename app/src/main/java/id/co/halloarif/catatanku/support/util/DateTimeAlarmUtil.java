@@ -5,11 +5,29 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class DateTimeAlarmUtil extends DateTimeUtil {
+    public static PendingIntent setPendingIntentMakeAlarm(Context context, Intent intent, int REQ_CODE) {
+        return PendingIntent.getBroadcast(context, REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    public static PendingIntent setPendingIntentMake(Context context, Intent intent, int REQ_CODE) {
+        return PendingIntent.getBroadcast(context, REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    public static PendingIntent setPendingIntentRemove(Context context, Intent intent, int REQ_CODE) {
+        return PendingIntent.getBroadcast(context, REQ_CODE, intent, 0);
+    }
+
+    public static boolean isAlarmActive(Context context, Intent intent, int REQ_CODE) {
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE) != null;
+    }
+
     public static void setAlarm(Activity activity, PendingIntent pendingIntent, int hourOfDay, int minute) {
         Calendar calNow = Calendar.getInstance();
         Calendar calSet = (Calendar) calNow.clone();
@@ -22,10 +40,22 @@ public class DateTimeAlarmUtil extends DateTimeUtil {
         if (calSet.compareTo(calNow) <= 0) {
             //jika ternyata waktu lewat maka alarm akan di atur untuk besok
             calSet.add(Calendar.DATE, 1);
+            Toast.makeText(activity, "Alarm Has set At " + hourOfDay + ":" + minute + " Tomorrow", Toast.LENGTH_SHORT).show();
         }
 
         AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), pendingIntent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.v("AlarmManager", "Starting AlarmManager for >= KITKAT version");
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), pendingIntent);
+        } else {
+            Log.v("AlarmManager", "Starting AlarmManager for < KITKAT version");
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), pendingIntent);
+        }
+
+        Toast.makeText(activity, "Alarm Has set At " + hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
+
     }
 
     /**
@@ -52,6 +82,14 @@ public class DateTimeAlarmUtil extends DateTimeUtil {
 
         AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), WEEK_MILLIS, pendingIntent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.v("AlarmManager", "Starting AlarmManager for >= KITKAT version");
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), WEEK_MILLIS, pendingIntent);
+        } else {
+            Log.v("AlarmManager", "Starting AlarmManager for < KITKAT version");
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), WEEK_MILLIS, pendingIntent);
+        }
     }
 
     public static void cancelAlarm(Activity activity, PendingIntent pendingIntent) {

@@ -84,6 +84,10 @@ public class DateListAdapter extends RecyclerView.Adapter<DateListAdapter.ViewHo
         return dates.size();
     }
 
+    public interface DateListListener {
+        void onDateSelect(int position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvAcaraDateListTglfvbi;
@@ -96,9 +100,5 @@ public class DateListAdapter extends RecyclerView.Adapter<DateListAdapter.ViewHo
             tvAcaraDateListMnthfvbi = (TextView) itemView.findViewById(R.id.tvAcaraDateListMnth);
             cvAcaraDateListfvbi = (CardView) itemView.findViewById(R.id.cvAcaraDateList);
         }
-    }
-
-    public interface DateListListener {
-        void onDateSelect(int position);
     }
 }

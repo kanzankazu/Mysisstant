@@ -1,7 +1,7 @@
 package id.co.halloarif.catatanku.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import id.co.halloarif.catatanku.R;
 

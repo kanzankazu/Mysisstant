@@ -116,21 +116,21 @@ public class LogRegActivity extends AppCompatActivity {
             @Override
             public void onRegister() {
                 if (InputValidUtil.isEmptyField(etLogRegNamefvbi)) {
-                    InputValidUtil.errorET(etLogRegNamefvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegNamefvbi, "Data kosong");
                 } else if (InputValidUtil.isEmptyField(etLogRegEmailfvbi)) {
-                    InputValidUtil.errorET(etLogRegEmailfvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegEmailfvbi, "Data kosong");
                 } else if (!InputValidUtil.isValidateEmail(etLogRegEmailfvbi.getText().toString().trim())) {
                     InputValidUtil.errorET(etLogRegEmailfvbi, "Please Correct Email Format");
                 } else if (InputValidUtil.isEmptyField(etLogRegPhoneNofvbi)) {
-                    InputValidUtil.errorET(etLogRegPhoneNofvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegPhoneNofvbi, "Data kosong");
                 } else if (!InputValidUtil.isValidatePhoneNumber(etLogRegPhoneNofvbi.getText().toString().trim())) {
-                    InputValidUtil.errorET(etLogRegPhoneNofvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegPhoneNofvbi, "Data kosong");
                 } else if (InputValidUtil.isEmptyField(etLogRegPassword1fvbi)) {
-                    InputValidUtil.errorET(etLogRegPassword1fvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegPassword1fvbi, "Data kosong");
                 } else if (InputValidUtil.isLenghtChar(etLogRegPassword1fvbi, 6)) {
                     InputValidUtil.errorET(etLogRegPassword1fvbi, "Password need 6 character or more");
                 } else if (InputValidUtil.isEmptyField(etLogRegPassword2fvbi)) {
-                    InputValidUtil.errorET(etLogRegPassword2fvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegPassword2fvbi, "Data kosong");
                 } else if (!InputValidUtil.isMatch(etLogRegPassword1fvbi.getText().toString().trim(), etLogRegPassword2fvbi.getText().toString().trim())) {
                     InputValidUtil.errorET(etLogRegPassword2fvbi, "Password not match");
                     etLogRegPassword2fvbi.setText("");
@@ -142,9 +142,9 @@ public class LogRegActivity extends AppCompatActivity {
             @Override
             public void onLogin() {
                 if (InputValidUtil.isEmptyField(etLogRegNamefvbi)) {
-                    InputValidUtil.errorET(etLogRegNamefvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegNamefvbi, "Data kosong");
                 } else if (InputValidUtil.isEmptyField(etLogRegPassword2fvbi)) {
-                    InputValidUtil.errorET(etLogRegPassword2fvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegPassword2fvbi, "Data kosong");
                 } else {
                     Log.d("Lihat", "onLogin LogRegActivity : " + InputValidUtil.isValidatePhoneNumber(sName));
                     Log.d("Lihat", "onLogin LogRegActivity : " + InputValidUtil.isValidateEmail(sEmail));
@@ -155,7 +155,7 @@ public class LogRegActivity extends AppCompatActivity {
                         if (InputValidUtil.isLenghtChar(etLogRegPassword2fvbi, 6)) {
                             InputValidUtil.errorET(etLogRegPassword2fvbi, "Password need 6 character or more");
                         } else {
-                            InputValidUtil.errorET(etLogRegNamefvbi, "Wrong format");
+                            InputValidUtil.errorET(etLogRegNamefvbi, "Salah format");
                         }
                     }
                 }
@@ -164,7 +164,7 @@ public class LogRegActivity extends AppCompatActivity {
             @Override
             public void onActivation() {
                 if (InputValidUtil.isEmptyField(etLogRegNamefvbi)) {
-                    InputValidUtil.errorET(etLogRegNamefvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegNamefvbi, "Data kosong");
                 } else if (!InputValidUtil.isValidatePhoneNumber(etLogRegNamefvbi.getText().toString().trim()) || !InputValidUtil.isValidateEmail(etLogRegNamefvbi.getText().toString().trim())) {
                     InputValidUtil.errorET(etLogRegNamefvbi, "Wrong Format");
                 } else {
@@ -175,12 +175,27 @@ public class LogRegActivity extends AppCompatActivity {
             @Override
             public void onForgetPass() {
                 if (InputValidUtil.isEmptyField(etLogRegNamefvbi)) {
-                    InputValidUtil.errorET(etLogRegNamefvbi, "Empty Field");
+                    InputValidUtil.errorET(etLogRegNamefvbi, "Data kosong");
                 } else if (!InputValidUtil.isValidatePhoneNumber(etLogRegNamefvbi.getText().toString().trim()) || !InputValidUtil.isValidateEmail(etLogRegNamefvbi.getText().toString().trim())) {
                     InputValidUtil.errorET(etLogRegNamefvbi, "Wrong Format");
                 } else {
                     Toast.makeText(getApplicationContext(), ISeasonConfig.SUCCESS, Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            @Override
+            public void onGmailClick() {
+
+            }
+
+            @Override
+            public void onFacebookClick() {
+
+            }
+
+            @Override
+            public void onTweeterClick() {
+
             }
         };
 
@@ -248,7 +263,7 @@ public class LogRegActivity extends AppCompatActivity {
         SpannableStringBuilder spanTxt = new SpannableStringBuilder();
 
         spanTxt.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.androidSblue)), 0, spanTxt.length(), 0);
-        spanTxt.append("Register");
+        spanTxt.append("RegisterActivity");
         spanTxt.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -258,12 +273,12 @@ public class LogRegActivity extends AppCompatActivity {
                 }
 
             }
-        }, spanTxt.length() - "Register".length(), spanTxt.length(), 0);
+        }, spanTxt.length() - "RegisterActivity".length(), spanTxt.length(), 0);
 
         spanTxt.append(" | ");
 
         spanTxt.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.androidSblue)), 0, spanTxt.length(), 0);
-        spanTxt.append("Login");
+        spanTxt.append("LoginActivity");
         spanTxt.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -273,7 +288,7 @@ public class LogRegActivity extends AppCompatActivity {
                 }
 
             }
-        }, spanTxt.length() - "Login".length(), spanTxt.length(), 0);
+        }, spanTxt.length() - "LoginActivity".length(), spanTxt.length(), 0);
 
         spanTxt.append(" | ");
 
@@ -315,8 +330,8 @@ public class LogRegActivity extends AppCompatActivity {
             tvLogRegTitlefvbi.setText("Please Input your data");
             etLogRegNamefvbi.setHint("Name");
             etLogRegPassword2fvbi.setHint("Rewrite password");
-            bLogRegExecutefvbi.setText("Register");
-            bLogRegChangeOptionfvbi.setText("Login");
+            bLogRegExecutefvbi.setText("RegisterActivity");
+            bLogRegChangeOptionfvbi.setText("LoginActivity");
             visibleView(etLogRegNamefvbi, llLogRegEmailfvbi, etLogRegPhoneNofvbi, llLogRegPassword1fvbi, llLogRegPassword2fvbi, llLogRegChangeOptionfvbi, llLogRegChangeOption2fvbi);
             bLogRegChangeOptionfvbi.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -326,11 +341,11 @@ public class LogRegActivity extends AppCompatActivity {
                 }
             });
         } else if (typeUI == 2) {
-            tvLogRegTitlefvbi.setText("Please Login Here");
+            tvLogRegTitlefvbi.setText("Please LoginActivity Here");
             etLogRegNamefvbi.setHint("Use Phone No or Email");
             etLogRegPassword2fvbi.setHint("Password");
-            bLogRegExecutefvbi.setText("Login");
-            bLogRegChangeOptionfvbi.setText("Register");
+            bLogRegExecutefvbi.setText("LoginActivity");
+            bLogRegChangeOptionfvbi.setText("RegisterActivity");
             visibleView(etLogRegNamefvbi, llLogRegPassword2fvbi);
             goneView(llLogRegEmailfvbi, etLogRegPhoneNofvbi, llLogRegPassword1fvbi);
             bLogRegChangeOptionfvbi.setOnClickListener(new View.OnClickListener() {

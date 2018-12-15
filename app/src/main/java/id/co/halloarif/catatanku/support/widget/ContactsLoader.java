@@ -11,16 +11,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import id.co.halloarif.catatanku.model.Contact;
+import id.co.halloarif.catatanku.model.ContactPickerModel;
 import id.co.halloarif.catatanku.view.adapter.ContactsListAdapter;
 
 public class ContactsLoader extends AsyncTask<String, Void, Void> {
+    public TextView txtProgress;
     ContactsListAdapter contactsListAdapter;
     Context context;
-    private ArrayList<Contact> tempContactHolder;
-    public TextView txtProgress;
     int totalContactsCount;
     int loadedContactsCount;
+    private ArrayList<ContactPickerModel> tempContactHolder;
 
     public ContactsLoader(Context context, ContactsListAdapter contactsListAdapter) {
         this.context = context;
@@ -67,7 +67,7 @@ public class ContactsLoader extends AsyncTask<String, Void, Void> {
 
                             String phNo = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 
-                            tempContactHolder.add(new Contact(phId, name, phNo, label));
+                            tempContactHolder.add(new ContactPickerModel(phId, name, phNo, label));
 
                         }
                         phoneCursor.close();

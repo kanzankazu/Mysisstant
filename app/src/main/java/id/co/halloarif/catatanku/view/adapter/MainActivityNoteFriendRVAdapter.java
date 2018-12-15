@@ -27,14 +27,14 @@ public class MainActivityNoteFriendRVAdapter extends RecyclerView.Adapter<Recycl
         return 0;
     }
 
+    interface MainActivityNoteFriendRVListener {
+
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    interface MainActivityNoteFriendRVListener {
-
     }
 }

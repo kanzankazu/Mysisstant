@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="5dp">
 
                 <EditText
@@ -49,17 +49,10 @@
                     android:textStyle="bold" />
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvAcaraInputDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
                 android:elevation="5dp"
                 app:cardCornerRadius="10dp">
 
@@ -71,71 +64,125 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Waktu Mulai"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:animateLayoutChanges="true"
-                        android:gravity="right"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <com.rm.rmswitch.RMSwitch
-                            android:id="@+id/rmsAcaraInputMulai"
-                            android:layout_width="75dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="10dp"
-                            app:checked="false"
-                            app:forceAspectRatio="true"
-                            app:switchBkgCheckedColor="@color/colorAccent"
-                            app:switchBkgNotCheckedColor="@color/colorPrimary"
-                            app:switchDesign="android"
-                            app:switchToggleCheckedColor="@color/colorPrimary"
-                            app:switchToggleCheckedImage="@drawable/ic_moon_white"
-                            app:switchToggleNotCheckedColor="@color/colorAccent"
-                            app:switchToggleNotCheckedImage="@drawable/ic_sun_white" />
+                            android:layout_marginTop="5dp"
+                            android:animateLayoutChanges="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Tanggal"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Jam"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Menit"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorAccent" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
+                            android:orientation="horizontal">
+
+                            <com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker
+                                android:id="@+id/whpAlarmInputTanggal1Mulai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:picker_selectedTextColor="@color/colorPrimary"
+                                app:picker_selectorColor="@color/colorAccent"
+                                app:picker_todayText="Hari Ini"
+                                app:picker_curved="true"
+                                app:picker_textColor="@color/colorAccent" />
+
+                            <com.github.florent37.singledateandtimepicker.widget.WheelDayPicker
+                                android:id="@+id/whpAlarmInputTanggalMulai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:wheel_atmospheric="true"
+                                app:wheel_curtain="true"
+                                app:wheel_curved="true"
+                                app:wheel_indicator="true"
+                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_item_text_color="@color/colorAccent"
+                                app:wheel_same_width="true"
+                                app:wheel_selected_item_text_color="@color/colorPrimary"
+                                app:wheel_visible_item_count="5" />
+
+                            <com.github.florent37.singledateandtimepicker.widget.WheelHourPicker
+                                android:id="@+id/whpAlarmInputJamMulai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:wheel_atmospheric="true"
+                                app:wheel_curtain="true"
+                                app:wheel_curved="true"
+                                app:wheel_indicator="true"
+                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_item_text_color="@color/colorAccent"
+                                app:wheel_same_width="true"
+                                app:wheel_selected_item_text_color="@color/colorPrimary"
+                                app:wheel_visible_item_count="5" />
+
+                            <com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker
+                                android:id="@+id/whpAlarmInputMenitMulai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:wheel_atmospheric="true"
+                                app:wheel_curtain="true"
+                                app:wheel_curved="true"
+                                app:wheel_indicator="true"
+                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_item_text_color="@color/colorAccent"
+                                app:wheel_same_width="true"
+                                app:wheel_selected_item_text_color="@color/colorPrimary"
+                                app:wheel_visible_item_count="5" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorAccent" />
+
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Jam"
-                        android:textStyle="bold" />
-
-                    <com.xw.repo.BubbleSeekBar
-                        android:id="@+id/bsbAcaraInputMulaiJam"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bsb_auto_adjust_section_mark="true"
-                        app:bsb_max="12"
-                        app:bsb_min="0"
-                        app:bsb_section_count="12"
-                        app:bsb_section_text_position="below_section_mark" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Menit"
-                        android:textStyle="bold" />
-
-                    <com.xw.repo.BubbleSeekBar
-                        android:id="@+id/bsbAcaraInputMulaiMenit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bsb_max="60"
-                        app:bsb_min="0"
-                        app:bsb_section_count="12"
-                        app:bsb_section_text_interval="1"
-                        app:bsb_section_text_position="below_section_mark" />
 
                 </LinearLayout>
 
@@ -144,7 +191,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
@@ -155,72 +202,115 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="Waktu Selesai"
                         android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:animateLayoutChanges="true"
-                        android:gravity="right"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <com.rm.rmswitch.RMSwitch
-                            android:id="@+id/rmsAcaraInputSelesai"
-                            android:layout_width="75dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:animateLayoutChanges="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Tanggal"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Jam"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Menit"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorAccent" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:checked="false"
-                            app:forceAspectRatio="true"
-                            app:switchBkgCheckedColor="@color/colorAccent"
-                            app:switchBkgNotCheckedColor="@color/colorPrimary"
-                            app:switchDesign="android"
-                            app:switchToggleCheckedColor="@color/colorPrimary"
-                            app:switchToggleCheckedImage="@drawable/ic_moon_white"
-                            app:switchToggleNotCheckedColor="@color/colorAccent"
-                            app:switchToggleNotCheckedImage="@drawable/ic_sun_white" />
+                            android:animateLayoutChanges="true"
+                            android:orientation="horizontal">
+
+                            <com.github.florent37.singledateandtimepicker.widget.WheelDayPicker
+                                android:id="@+id/whpAlarmInputTanggalSelesai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:wheel_atmospheric="true"
+                                app:wheel_curtain="true"
+                                app:wheel_curved="true"
+                                app:wheel_indicator="true"
+                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_item_text_color="@color/colorAccent"
+                                app:wheel_same_width="true"
+                                app:wheel_selected_item_text_color="@color/colorPrimary"
+                                app:wheel_visible_item_count="5" />
+
+                            <com.github.florent37.singledateandtimepicker.widget.WheelHourPicker
+                                android:id="@+id/whpAlarmInputJamSelesai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:wheel_atmospheric="true"
+                                app:wheel_curtain="true"
+                                app:wheel_curved="true"
+                                app:wheel_indicator="true"
+                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_item_text_color="@color/colorAccent"
+                                app:wheel_same_width="true"
+                                app:wheel_selected_item_text_color="@color/colorPrimary"
+                                app:wheel_visible_item_count="5" />
+
+                            <com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker
+                                android:id="@+id/whpAlarmInputMenitSelesai"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:wheel_atmospheric="true"
+                                app:wheel_curtain="true"
+                                app:wheel_curved="true"
+                                app:wheel_indicator="true"
+                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_item_text_color="@color/colorAccent"
+                                app:wheel_same_width="true"
+                                app:wheel_selected_item_text_color="@color/colorPrimary"
+                                app:wheel_visible_item_count="5" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorAccent" />
 
                     </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Jam"
-                        android:textStyle="bold" />
-
-                    <com.xw.repo.BubbleSeekBar
-                        android:id="@+id/bsbAcaraInputSelesaiJam"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bsb_auto_adjust_section_mark="true"
-                        app:bsb_max="12"
-                        app:bsb_min="0"
-                        app:bsb_section_count="12"
-                        app:bsb_section_text_position="below_section_mark" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Menit"
-                        android:textStyle="bold" />
-
-                    <com.xw.repo.BubbleSeekBar
-                        android:id="@+id/bsbAcaraInputSelesaiMenit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bsb_max="60"
-                        app:bsb_min="0"
-                        app:bsb_section_count="12"
-                        app:bsb_section_text_interval="1"
-                        app:bsb_section_text_position="below_section_mark" />
 
                 </LinearLayout>
 
@@ -229,7 +319,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="10dp"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
@@ -366,9 +456,8 @@
                 android:id="@+id/bAcaraInputBuat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/background_radius"
                 android:backgroundTint="@color/colorAccent"
                 android:text="Buat Sekarang"

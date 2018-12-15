@@ -15,8 +15,34 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white"
+        android:visibility="gone"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="mini" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvAlarmInputCoorBuat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ivAcaraSummaryCreate"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.3"
+            android:gravity="center"
+            android:text="Swipe up \n to \n create"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivAcaraSummaryCreate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rectangle_top"
+            android:src="@drawable/ic_back_top" />
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,11 +1,18 @@
 package id.co.halloarif.catatanku.presenter;
 
 public interface LogRegListener {
-    void onRegister(/*String phoneEmail, String password*/);
+    void onRegister();
 
-    void onLogin(/*String phoneEmail, String password*/);
+    void onLogin();
 
-    void onActivation(/*String phoneEmail, String password*/);
+    void onActivation();
 
-    void onForgetPass(/*String phoneEmail, String password*/);
+    void onForgetPass();
+
+    void onGmailClick();
+
+    void onFacebookClick();
+
+    void onTweeterClick();
+
 }

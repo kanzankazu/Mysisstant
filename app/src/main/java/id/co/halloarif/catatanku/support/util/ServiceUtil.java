@@ -8,8 +8,16 @@ import android.util.Log;
 
 public class ServiceUtil {
 
+    public static void startService(Context context, Intent intent) {
+        context.startService(intent);
+    }
+
     public static void startService(Context context, Class<?> targetClass) {
         context.startService(new Intent(context, targetClass));
+    }
+
+    public static void stopSevice(Context context, Intent intent) {
+        context.stopService(intent);
     }
 
     public static void stopSevice(Context context, Class<?> targetClass) {

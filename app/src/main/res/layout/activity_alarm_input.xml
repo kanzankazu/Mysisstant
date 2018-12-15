@@ -62,114 +62,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:animateLayoutChanges="true"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Jam"
-                            android:textStyle="bold" />
-
-                        <com.xw.repo.BubbleSeekBar
-                            android:id="@+id/bsbAlarmInputJam"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:bsb_auto_adjust_section_mark="true"
-                            app:bsb_max="12"
-                            app:bsb_min="0"
-                            app:bsb_section_count="12"
-                            app:bsb_section_text_position="below_section_mark" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Menit"
-                            android:textStyle="bold" />
-
-                        <com.xw.repo.BubbleSeekBar
-                            android:id="@+id/bsbAlarmInputMenit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:bsb_max="60"
-                            app:bsb_min="0"
-                            app:bsb_section_count="12"
-                            app:bsb_section_text_interval="1"
-                            app:bsb_section_text_position="below_section_mark" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:animateLayoutChanges="true"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:animateLayoutChanges="true"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tvAlarmJam"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Jam"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvAlarmMenit"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Menit"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="2dp"
-                            android:background="@color/colorAccent" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:animateLayoutChanges="true"
-                            android:orientation="horizontal">
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/rvAlarmJam"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                                tools:listitem="@layout/list_hhmm_vertical" />
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/rvAlarmMenit"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                                tools:listitem="@layout/list_hhmm_vertical" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/colorAccent" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:animateLayoutChanges="true"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -216,7 +108,7 @@
                                 app:wheel_curtain="true"
                                 app:wheel_curved="true"
                                 app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_indicator_color="@color/colorAccent"
                                 app:wheel_item_text_color="@color/colorAccent"
                                 app:wheel_item_text_size="30dp"
                                 app:wheel_same_width="true"
@@ -232,7 +124,7 @@
                                 app:wheel_curtain="true"
                                 app:wheel_curved="true"
                                 app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
+                                app:wheel_indicator_color="@color/colorAccent"
                                 app:wheel_item_text_color="@color/colorAccent"
                                 app:wheel_item_text_size="30dp"
                                 app:wheel_same_width="true"
@@ -244,7 +136,6 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
                             android:background="@color/colorAccent" />
 
                     </LinearLayout>
@@ -402,8 +293,7 @@
 
                         <ImageView
                             android:layout_width="wrap_content"
-
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="@drawable/rectangle_left"
                             android:src="@drawable/ic_mic" />
 
@@ -412,10 +302,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="15dp"
+                            android:layout_weight="1"
                             android:ellipsize="marquee"
                             android:gravity="center_vertical"
                             android:lines="1"
                             android:text="Voice" />
+
+                        <ImageView
+                            android:id="@+id/ivAlarmInputVoicePlayStop"
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:src="@drawable/ic_play_mp"
+                            android:tint="@color/colorAccent"
+                            android:visibility="gone" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -454,7 +355,8 @@
                 android:background="@drawable/background_radius"
                 android:backgroundTint="@color/colorAccent"
                 android:text="Buat Sekarang"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

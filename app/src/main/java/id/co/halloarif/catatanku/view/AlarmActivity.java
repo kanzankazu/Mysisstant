@@ -2,9 +2,11 @@ package id.co.halloarif.catatanku.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -13,42 +15,39 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.singledateandtimepicker.widget.WheelHourPicker;
 import com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker;
-import com.rm.rmswitch.RMSwitch;
-import com.xw.repo.BubbleSeekBar;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import id.co.halloarif.catatanku.R;
-import id.co.halloarif.catatanku.model.Contact;
+import id.co.halloarif.catatanku.model.AlarmModel;
+import id.co.halloarif.catatanku.model.ContactPickerModel;
+import id.co.halloarif.catatanku.service.AlarmReceiver;
+import id.co.halloarif.catatanku.support.util.DateTimeAlarmUtil;
 import id.co.halloarif.catatanku.support.util.DateTimeUtil;
 import id.co.halloarif.catatanku.support.util.VideoAudioUtil;
-import id.co.halloarif.catatanku.view.adapter.DateAdapter;
 
 public class AlarmActivity extends AppCompatActivity {
-    private RMSwitch rmsAlarmInputfvbi;
-    private BubbleSeekBar bsbAlarmInputJamfvbi;
-    private BubbleSeekBar bsbAlarmInputMenitfvbi;
+    private static final int REQ_CODE_CONTACK_PICKER = 4;
+    private static final int REQ_CODE_RINGTONE_PICKER = 5;
+    private static final String BUNDLE_LIST_PIXELS = "allPixels";
+    MediaRecorder recorder = new MediaRecorder();
     private CheckBox cbAlarmInputHariSeninfvbi;
     private CheckBox cbAlarmInputHariSelasafvbi;
     private CheckBox cbAlarmInputHariRabufvbi;
@@ -60,29 +59,26 @@ public class AlarmActivity extends AppCompatActivity {
     private TextView tvAlarmInputAddFriendfvbi;
     private LinearLayout llAlarmInputVoicefvbi;
     private TextView tvAlarmInputVoicefvbi;
+    private ImageView ivAlarmInputVoicePlayStopfvbi;
     private LinearLayout llAlarmInputRingtonefvbi;
     private TextView tvAlarmInputRingtonefvbi;
     private Button bAlarmInputBuatfvbi;
-
-    private RecyclerView rvAlarmJamfvbi;
-    private RecyclerView rvAlarmMenitfvbi;
     private WheelHourPicker whpAlarmInputJamfvbi;
     private WheelMinutePicker whpAlarmInputMenitfvbi;
-
+    private int currentHour;
+    private int currentMinute;
+    private String AmPm;
+    private String hh;
+    private String mm;
+    private String HH;
     private String sPhoneNo;
-
-    private String voicePath = null;
     private boolean isRecord = false;
-    MediaRecorder recorder = new MediaRecorder();
-
-    private String chosenRingtone;
-
-    private static final String BUNDLE_LIST_PIXELS = "allPixels";
-    private float itemWidth;
-    private float padding;
-    private float firstItemWidth;
+    private String recordPath;
+    private MediaPlayer mPlayer;
+    private boolean isPlay = false;
+    private String ringtonePath;
+    private Uri uriRingtone;
     private float allPixels;
-    private int mLastPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +93,6 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void initComponent() {
-        rmsAlarmInputfvbi = (RMSwitch) findViewById(R.id.rmsAlarmInput);
-        bsbAlarmInputJamfvbi = (BubbleSeekBar) findViewById(R.id.bsbAlarmInputJam);
-        bsbAlarmInputMenitfvbi = (BubbleSeekBar) findViewById(R.id.bsbAlarmInputMenit);
         cbAlarmInputHariSeninfvbi = (CheckBox) findViewById(R.id.cbAlarmInputHariSenin);
         cbAlarmInputHariSelasafvbi = (CheckBox) findViewById(R.id.cbAlarmInputHariSelasa);
         cbAlarmInputHariRabufvbi = (CheckBox) findViewById(R.id.cbAlarmInputHariRabu);
@@ -111,12 +104,10 @@ public class AlarmActivity extends AppCompatActivity {
         tvAlarmInputAddFriendfvbi = (TextView) findViewById(R.id.tvAlarmInputAddFriend);
         llAlarmInputVoicefvbi = (LinearLayout) findViewById(R.id.llAlarmInputVoice);
         tvAlarmInputVoicefvbi = (TextView) findViewById(R.id.tvAlarmInputVoice);
+        ivAlarmInputVoicePlayStopfvbi = (ImageView) findViewById(R.id.ivAlarmInputVoicePlayStop);
         llAlarmInputRingtonefvbi = (LinearLayout) findViewById(R.id.llAlarmInputRingtone);
         tvAlarmInputRingtonefvbi = (TextView) findViewById(R.id.tvAlarmInputRingtone);
         bAlarmInputBuatfvbi = (Button) findViewById(R.id.bAlarmInputBuat);
-
-        rvAlarmJamfvbi = (RecyclerView) findViewById(R.id.rvAlarmJam);
-        rvAlarmMenitfvbi = (RecyclerView) findViewById(R.id.rvAlarmMenit);
 
         whpAlarmInputJamfvbi = (WheelHourPicker) findViewById(R.id.whpAlarmInputJam);
         whpAlarmInputMenitfvbi = (WheelMinutePicker) findViewById(R.id.whpAlarmInputMenit);
@@ -132,194 +123,60 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void initContent() {
-        initSeekbarTime();
+        AmPm = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("a"));
+        hh = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("h"));
+        mm = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("mm"));
 
-        initRecycleDate();
 
         initTimePicker();
     }
 
-    private void initSeekbarTime() {
-        String AmPm = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("a"));
-        String hh = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("h"));
-        String mm = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("m"));
-        if (AmPm.equalsIgnoreCase("AM")) {
-            rmsAlarmInputfvbi.setChecked(false);
-        } else {
-            rmsAlarmInputfvbi.setChecked(true);
-        }
-        bsbAlarmInputJamfvbi.setProgress(Float.parseFloat(hh));
-        bsbAlarmInputMenitfvbi.setProgress(Float.parseFloat(mm));
-        bsbAlarmInputJamfvbi.getConfigBuilder().autoAdjustSectionMark();
-    }
-
-    private void initRecycleDate() {
-        String HH = DateTimeUtil.dateToString(DateTimeUtil.getCurrentDate(), new SimpleDateFormat("H"));
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        itemWidth = getResources().getDimension(R.dimen.item_width);
-        padding = (size.x - itemWidth) / 2;
-        firstItemWidth = getResources().getDimension(R.dimen.padding_item_width);
-
-        allPixels = 0;
-
-        List<String> datesHH = new ArrayList<>();
-        for (int ih = -2; ih <= 25; ih++) {
-            datesHH.add(String.valueOf(ih));
-        }
-        Log.d("Lihat", "initRecycleDate AlarmActivity : " + datesHH);
-        Log.d("Lihat", "initRecycleDate AlarmActivity : " + datesHH.size());
-        List<String> datesmm = new ArrayList<>();
-        for (int im = -2; im <= 61; im++) {
-            datesmm.add(String.valueOf(im));
-        }
-        Log.d("Lihat", "initRecycleDate AlarmActivity : " + datesmm);
-        Log.d("Lihat", "initRecycleDate AlarmActivity : " + datesmm.size());
-
-        DateAdapter adapter = new DateAdapter(AlarmActivity.this, datesHH);
-        rvAlarmJamfvbi.setAdapter(adapter);
-        rvAlarmJamfvbi.setLayoutManager(new LinearLayoutManager(this));
-        SnapHelper snapHelper = new LinearSnapHelper() {
-            @Override
-            public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
-                View centerView = findSnapView(layoutManager);
-                if (centerView == null)
-                    return RecyclerView.NO_POSITION;
-
-                int position = layoutManager.getPosition(centerView);
-                int targetPosition = -1;
-                if (layoutManager.canScrollHorizontally()) {
-                    if (velocityX < 0) {
-                        targetPosition = position - 1;
-                    } else {
-                        targetPosition = position + 1;
-                    }
-                }
-
-                if (layoutManager.canScrollVertically()) {
-                    if (velocityY < 0) {
-                        targetPosition = position - 1;
-                    } else {
-                        targetPosition = position + 1;
-                    }
-                }
-
-                final int firstItem = 0;
-                final int lastItem = layoutManager.getItemCount() - 1;
-                targetPosition = Math.min(lastItem, Math.max(targetPosition, firstItem));
-                Log.d("Lihat", "findTargetSnapPosition AlarmActivity : " + targetPosition);
-                return targetPosition;
-            }
-        };
-        snapHelper.attachToRecyclerView(rvAlarmJamfvbi);
-        rvAlarmJamfvbi.setOnFlingListener(snapHelper);
-
-        DateAdapter adapter2 = new DateAdapter(AlarmActivity.this, datesmm);
-        rvAlarmMenitfvbi.setAdapter(adapter2);
-        rvAlarmMenitfvbi.setLayoutManager(new LinearLayoutManager(this));
-        SnapHelper snapHelper2 = new LinearSnapHelper();
-        snapHelper2.attachToRecyclerView(rvAlarmMenitfvbi);
-        rvAlarmJamfvbi.setOnFlingListener(snapHelper);
-    }
-
     private void initTimePicker() {
         whpAlarmInputJamfvbi.setIsAmPm(false);
-        whpAlarmInputMenitfvbi.setStepMinutes(1);
+        whpAlarmInputJamfvbi.setDefault(HH);
         whpAlarmInputJamfvbi.setHourChangedListener(new WheelHourPicker.OnHourChangedListener() {
             @Override
             public void onHourChanged(WheelHourPicker picker, int hour) {
                 Log.d("Lihat", "onHourChanged AlarmActivity : " + hour);
+                currentHour = hour;
             }
         });
+
+        whpAlarmInputMenitfvbi.setStepMinutes(1);
         whpAlarmInputMenitfvbi.setOnMinuteChangedListener(new WheelMinutePicker.OnMinuteChangedListener() {
             @Override
             public void onMinuteChanged(WheelMinutePicker picker, int minutes) {
                 Log.d("Lihat", "onMinuteChanged AlarmActivity : " + minutes);
+                currentMinute = minutes;
             }
         });
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initListener() {
-        rvAlarmJamfvbi.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                synchronized (this) {
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        calculatePositionAndScroll(recyclerView);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                allPixels += dx;
-            }
-        });
-        rvAlarmMenitfvbi.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                synchronized (this) {
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        calculatePositionAndScroll(recyclerView);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                allPixels += dx;
-            }
-        });
-
-        bsbAlarmInputJamfvbi.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                Log.d("Lihat", "onProgressChanged AlarmActivity : " + progress);
-                Log.d("Lihat", "onProgressChanged AlarmActivity : " + progressFloat);
-                Log.d("Lihat", "onProgressChanged AlarmActivity : " + fromUser);
-            }
-
-            @Override
-            public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
-                Log.d("Lihat", "getProgressOnActionUp AlarmActivity : " + progress);
-                Log.d("Lihat", "getProgressOnActionUp AlarmActivity : " + progressFloat);
-            }
-
-            @Override
-            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                Log.d("Lihat", "getProgressOnFinally AlarmActivity : " + progress);
-                Log.d("Lihat", "getProgressOnFinally AlarmActivity : " + progressFloat);
-                Log.d("Lihat", "getProgressOnFinally AlarmActivity : " + fromUser);
-            }
-        });
 
         llAlarmInputAddfriendfvbi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                //startActivityForResult(intent, 4);
+                //startActivityForResult(intent, REQ_CODE_CONTACK_PICKER);
 
                 Intent intentContactPick = new Intent(AlarmActivity.this, ListContactPickerCheckBox.class);
-                startActivityForResult(intentContactPick, 4);
+                startActivityForResult(intentContactPick, REQ_CODE_CONTACK_PICKER);
             }
         });
         llAlarmInputVoicefvbi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!isRecord) {
-                    if (!TextUtils.isEmpty(voicePath)) {
-                        File file = new File(voicePath);
+                    if (!TextUtils.isEmpty(recordPath)) {
+                        File file = new File(recordPath);
                         if (file.exists()) {
                             file.delete();
                         }
                     }
+
+                    ivAlarmInputVoicePlayStopfvbi.setVisibility(View.GONE);
 
                     VideoAudioUtil.MediaRecorderReady(recorder);
                     VideoAudioUtil.startRecording(recorder);
@@ -331,7 +188,9 @@ public class AlarmActivity extends AppCompatActivity {
                     tvAlarmInputVoicefvbi.setText("recording");
                     tvAlarmInputVoicefvbi.setTextColor(getResources().getColor(R.color.white));
                 } else {
-                    VideoAudioUtil.stopRecording(recorder);
+                    recordPath = VideoAudioUtil.stopRecording(recorder);
+
+                    ivAlarmInputVoicePlayStopfvbi.setVisibility(View.VISIBLE);
 
                     llAlarmInputVoicefvbi.setBackgroundColor(getResources().getColor(R.color.white));
                     isRecord = false;
@@ -339,21 +198,32 @@ public class AlarmActivity extends AppCompatActivity {
 
                     tvAlarmInputVoicefvbi.setText("recorded");
                     tvAlarmInputVoicefvbi.setTextColor(getResources().getColor(R.color.androidSblue));
-
-                    /*new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            //code here
-                            Log.d("Lihat", "onClick AlarmActivity : " + voicePath);
-                            Uri uri = Uri.parse(getFilename());
-                            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-                            mediaMetadataRetriever.setDataSource(getFilename());
-                            String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-                            int millSecond = Integer.parseInt(durationStr);
-                            mediaMetadataRetriever.release();
-                            Log.d("Lihat", "onClick AlarmActivity : " + millSecond);
-                        }
-                    }, 2000);*/
                 }
+            }
+        });
+        llAlarmInputVoicefvbi.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (!isRecord) {
+                    if (!TextUtils.isEmpty(recordPath)) {
+                        File file = new File(recordPath);
+                        if (file.exists()) {
+                            file.delete();
+                            recordPath = "";
+
+                            ivAlarmInputVoicePlayStopfvbi.setVisibility(View.GONE);
+
+                            llAlarmInputVoicefvbi.setBackgroundColor(getResources().getColor(R.color.white));
+                            isRecord = false;
+                            Toast.makeText(getApplicationContext(), "Delete record", Toast.LENGTH_SHORT).show();
+
+                            tvAlarmInputVoicefvbi.setText("Voice");
+                            tvAlarmInputVoicefvbi.setTextColor(getResources().getColor(R.color.gray));
+                        }
+                    }
+                }
+
+                return false;
             }
         });
         llAlarmInputRingtonefvbi.setOnClickListener(new View.OnClickListener() {
@@ -361,64 +231,77 @@ public class AlarmActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-                startActivityForResult(intent, 5);
+                //intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+                //intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                startActivityForResult(intent, REQ_CODE_RINGTONE_PICKER);
+            }
+        });
+
+        ivAlarmInputVoicePlayStopfvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isPlay) {
+                    playMediaPlayer();
+                } else {
+                    stopMediaPlayer();
+                }
             }
         });
 
         bAlarmInputBuatfvbi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Lihat", "onClick AlarmActivity : " + bsbAlarmInputJamfvbi.getProgress());
-                Log.d("Lihat", "onClick AlarmActivity : " + bsbAlarmInputMenitfvbi.getProgress());
-
-                List<Integer> intFromCB = getIntFromCB(
-                        cbAlarmInputHariSeninfvbi,
-                        cbAlarmInputHariSelasafvbi,
-                        cbAlarmInputHariRabufvbi,
-                        cbAlarmInputHariKamisfvbi,
-                        cbAlarmInputHariJumatfvbi,
-                        cbAlarmInputHariSabtufvbi,
-                        cbAlarmInputHariMinggufvbi
-                );
-                Log.d("Lihat", "onClick AlarmActivity : " + intFromCB);
-
+                setSaveAlarm();
             }
         });
     }
 
-    private List<Integer> getIntFromCB(CheckBox... checkBoxes) {
-        List<Integer> ints = new ArrayList<>();
-        for (int i = 0; i < checkBoxes.length; i++) {
-            CheckBox checkBox = checkBoxes[i];
-            if (checkBox.isChecked()) {
-                String trim = checkBox.getTag().toString().trim();
-                ints.add(Integer.valueOf(trim));
-            }
-        }
-        return ints;
+    private void setSaveAlarm() {
+        AlarmModel model = new AlarmModel();
+
+        List<Integer> intFromCB = getIntFromCB(
+                cbAlarmInputHariSeninfvbi,
+                cbAlarmInputHariSelasafvbi,
+                cbAlarmInputHariRabufvbi,
+                cbAlarmInputHariKamisfvbi,
+                cbAlarmInputHariJumatfvbi,
+                cbAlarmInputHariSabtufvbi,
+                cbAlarmInputHariMinggufvbi
+        );
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("title", "Notifikasi Alarm");
+        intent.putExtra("msg", "Hay Faisal. sekarang sudah jam " + currentHour + ":" + currentMinute);
+        intent.putExtra("record", recordPath);
+        intent.putExtra("ringtone", ringtonePath);
+        PendingIntent pendingIntent = DateTimeAlarmUtil.setPendingIntentMakeAlarm(AlarmActivity.this, intent, 0);
+
+        DateTimeAlarmUtil.setAlarm(AlarmActivity.this, pendingIntent, currentHour, currentMinute);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == 5) {
-            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-            if (uri != null) {
-                chosenRingtone = uri.toString();
-                Log.d("Lihat", "onActivityResult AlarmActivity : " + chosenRingtone);
-                Log.d("Lihat", "onActivityResult AlarmActivity : " + uri.getPath());
+        if (resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_RINGTONE_PICKER) {
+            uriRingtone = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+            if (uriRingtone != null) {
+                ringtonePath = uriRingtone.toString();
+//                ringtonePath = uriRingtone.getPath();
+                Log.d("Lihat", "onActivityResult AlarmActivity : " + uriRingtone.toString());
+                Log.d("Lihat", "onActivityResult AlarmActivity : " + uriRingtone.getPath());
 
-                Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+                Ringtone ringtone = RingtoneManager.getRingtone(this, uriRingtone);
                 Log.d("Lihat", "onActivityResult AlarmActivity : " + ringtone.getTitle(this));
 
                 tvAlarmInputRingtonefvbi.setText(ringtone.getTitle(this));
                 tvAlarmInputRingtonefvbi.setTextColor(getResources().getColor(R.color.androidSblue));
             } else {
-                chosenRingtone = null;
+                ringtonePath = null;
             }
-        } else if (resultCode == Activity.RESULT_OK && requestCode == 4) {
+        } else if (resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_CONTACK_PICKER) {
             /*Cursor cursor = null;
             try {
                 String phoneNo = null;
@@ -442,9 +325,9 @@ public class AlarmActivity extends AppCompatActivity {
                 e.printStackTrace();
             }*/
 
-            ArrayList<Contact> selectedContacts = data.getParcelableArrayListExtra("SelectedContacts");
+            ArrayList<ContactPickerModel> selectedContacts = data.getParcelableArrayListExtra("SelectedContacts");
             Log.d("Lihat", "onActivityResult AlarmActivity : " + selectedContacts.size());
-            HashSet<Contact> hashSet = new HashSet<Contact>(selectedContacts);
+            HashSet<ContactPickerModel> hashSet = new HashSet<ContactPickerModel>(selectedContacts);
             selectedContacts.clear();
             selectedContacts.addAll(hashSet);
 
@@ -452,7 +335,7 @@ public class AlarmActivity extends AppCompatActivity {
             List<String> contactsFilter = new ArrayList<>();
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < selectedContacts.size(); i++) {
-                Contact model = selectedContacts.get(i);
+                ContactPickerModel model = selectedContacts.get(i);
                 contactsFilter.add(model.getName() + "|" + model.getPhone());
 
                 if (i == (selectedContacts.size() - 1)) {
@@ -464,6 +347,7 @@ public class AlarmActivity extends AppCompatActivity {
             }
             Log.d("Lihat", "onActivityResult AlarmActivity : " + contactsFilter);
             Log.d("Lihat", "onActivityResult AlarmActivity : " + builder);
+            sPhoneNo = builder.toString();
             tvAlarmInputAddFriendfvbi.setText(builder);
         }
     }
@@ -471,80 +355,6 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         dialogQuit();
-    }
-
-    private void dialogQuit() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure to exit without save?");
-        alertDialogBuilder.setCancelable(false);
-        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                if (isRecord) {
-                    VideoAudioUtil.stopRecording(recorder);
-                }
-
-                /*File file = new File(voicePath);
-                if (file.exists()) {
-                    file.delete();
-                }*/
-
-                finish();
-            }
-        });
-        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-
-            }
-        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
-
-    private void calculatePositionAndScroll(RecyclerView recyclerView) {
-        int expectedPosition = Math.round((allPixels + padding - firstItemWidth) / itemWidth);
-        // Special cases for the padding items
-        if (expectedPosition == -1) {
-            expectedPosition = 0;
-        } else if (expectedPosition >= recyclerView.getAdapter().getItemCount() - 2) {
-            expectedPosition--;
-        }
-        Log.d("Lihat", "calculatePositionAndScroll AlarmActivity : " + expectedPosition);
-        scrollListToPosition(recyclerView, expectedPosition);
-    }
-
-    private void scrollListToPosition(RecyclerView recyclerView, int expectedPosition) {
-        float targetScrollPos = expectedPosition * itemWidth + firstItemWidth - padding;
-        float missingPx = targetScrollPos - allPixels;
-        if (missingPx != 0) {
-            recyclerView.smoothScrollBy((int) missingPx, 0);
-        }
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        final RecyclerView rvAlarmJamfvbi = (RecyclerView) findViewById(R.id.rvAlarmJam);
-        final RecyclerView rvAlarmMenitfvbi = (RecyclerView) findViewById(R.id.rvAlarmMenit);
-
-        ViewTreeObserver vto = rvAlarmJamfvbi.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                rvAlarmJamfvbi.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                calculatePositionAndScroll(rvAlarmJamfvbi);
-            }
-        });
-        ViewTreeObserver vto2 = rvAlarmMenitfvbi.getViewTreeObserver();
-        vto2.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                rvAlarmMenitfvbi.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                calculatePositionAndScroll(rvAlarmMenitfvbi);
-            }
-        });
     }
 
     @Override
@@ -557,5 +367,110 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putFloat(BUNDLE_LIST_PIXELS, allPixels);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopDeleteRecord();
+    }
+
+    private List<Integer> getIntFromCB(CheckBox... checkBoxes) {
+        List<Integer> ints = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            CheckBox checkBox = checkBoxes[i];
+            if (checkBox.isChecked()) {
+                String trim = checkBox.getTag().toString().trim();
+                ints.add(Integer.valueOf(trim));
+            }
+        }
+        return ints;
+    }
+
+    private void playMediaPlayer() {
+        // Even you can refer resource in res/raw directory
+        //Uri myUri = Uri.parse("android.resource://com.prgguru.example/" + R.raw.hosannatamil);
+        //Uri myUri1 = Uri.parse("file:///sdcard/Songs/ARR Hits/hosannatamil.mp3");
+
+        isPlay = true;
+        ivAlarmInputVoicePlayStopfvbi.setImageResource(R.drawable.ic_stop_mp);
+        Uri myUri1 = Uri.fromFile(new File(recordPath));
+        mPlayer = new MediaPlayer();
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mPlayer.setDataSource(getApplicationContext(), myUri1);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (SecurityException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IllegalStateException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            mPlayer.prepare();
+        } catch (IllegalStateException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+        }
+        mPlayer.start();
+
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                stopMediaPlayer();
+            }
+        });
+    }
+
+    private void stopMediaPlayer() {
+        isPlay = false;
+        ivAlarmInputVoicePlayStopfvbi.setImageResource(R.drawable.ic_play_mp);
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            mPlayer.stop();
+        }
+    }
+
+    private void stopDeleteRecord() {
+        if (isRecord) {
+            String s = VideoAudioUtil.stopRecording(recorder);
+            if (!TextUtils.isEmpty(s)) {
+                File file = new File(s);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        } else {
+            if (!TextUtils.isEmpty(recordPath)) {
+                File file = new File(recordPath);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    private void dialogQuit() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure to exit without save?");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                stopDeleteRecord();
+                finish();
+                overridePendingTransition(R.anim.fadein, R.anim.keluar_ke_bawah);
+            }
+        });
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

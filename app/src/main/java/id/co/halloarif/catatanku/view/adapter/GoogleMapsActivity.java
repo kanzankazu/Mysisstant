@@ -31,12 +31,11 @@ import id.co.halloarif.catatanku.R;
 
 public class GoogleMapsActivity extends AppCompatActivity {
 
+    PlacesTask placesTask;
+    ParserTask parserTask;
     private EditText edEnterLocationfvbi;
     private ListView listView1fvbi;
     private GooglePlacesAutocompleteAdapter dataAdapter;
-
-    PlacesTask placesTask;
-    ParserTask parserTask;
     private AutoCompleteTextView actvEnterLocationfvbi;
 
     @Override

@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 
 import id.co.halloarif.catatanku.R;
-import id.co.halloarif.catatanku.support.util.SystemUtil;
 import id.co.halloarif.catatanku.support.widget.OnSwipeTouchListener;
 
 public class AlarmSummaryActivity extends AppCompatActivity {
@@ -30,7 +28,6 @@ public class AlarmSummaryActivity extends AppCompatActivity {
         initContent();
         initListener();
 
-
     }
 
     private void initComponent() {
@@ -48,7 +45,7 @@ public class AlarmSummaryActivity extends AppCompatActivity {
     }
 
     private void initContent() {
-
+        fabAlarmSummary.setVisibility(View.GONE);
     }
 
     private void initListener() {
@@ -59,14 +56,7 @@ public class AlarmSummaryActivity extends AppCompatActivity {
             }
         });
 
-        ivAlarmSummaryCreatefvbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveToAlarm();
-            }
-        });
-
-        ivAlarmSummaryCreatefvbi.setOnTouchListener(new OnSwipeTouchListener(AlarmSummaryActivity.this){
+        ivAlarmSummaryCreatefvbi.setOnTouchListener(new OnSwipeTouchListener(AlarmSummaryActivity.this) {
             @Override
             public void onSwipeRight() {
                 super.onSwipeRight();
@@ -80,7 +70,7 @@ public class AlarmSummaryActivity extends AppCompatActivity {
             @Override
             public void onSwipeTop() {
                 super.onSwipeTop();
-                moveToAlarm();
+                    moveToAlarm();
             }
 
             @Override
@@ -93,6 +83,7 @@ public class AlarmSummaryActivity extends AppCompatActivity {
     private void moveToAlarm() {
         Intent intent = new Intent(AlarmSummaryActivity.this, AlarmActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.masuk_dari_bawah, R.anim.fadeout);
     }
 
 }

@@ -94,12 +94,14 @@ public class SystemUtil {
         return s.replace(" ", "+");
     }
 
-    public static void visibile(Context context, View view, int visible, int anim) {
+    public static Animation visibile(Context context, View view, int visible, int anim) {
+        Animation animation = AnimationUtils.loadAnimation(context, anim);
         if (view.getVisibility() != visible) {
             view.setVisibility(visible);
-            Animation animation = AnimationUtils.loadAnimation(context, anim);
             view.startAnimation(animation);
         }
+
+        return animation;
     }
 
     public static void errorET(EditText editText, CharSequence stringerror) {

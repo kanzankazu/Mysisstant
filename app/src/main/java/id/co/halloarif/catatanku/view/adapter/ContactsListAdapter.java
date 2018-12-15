@@ -12,58 +12,58 @@ import android.widget.CompoundButton;
 import java.util.ArrayList;
 
 import id.co.halloarif.catatanku.R;
-import id.co.halloarif.catatanku.model.Contact;
-import id.co.halloarif.catatanku.model.ContactsList;
+import id.co.halloarif.catatanku.model.ContactPickerModel;
+import id.co.halloarif.catatanku.model.ContactsListPickerModel;
 
 public class ContactsListAdapter extends BaseAdapter {
     public Context context;
-    public ContactsList contactsList, filteredContactsList, selectedContactsList;
+    public ContactsListPickerModel contactsListPickerModel, filteredContactsListPickerModel, selectedContactsListPickerModel;
     public String filterContactName;
 
-    public ContactsListAdapter(Context context, ContactsList contactsList) {
+    public ContactsListAdapter(Context context, ContactsListPickerModel contactsListPickerModel) {
 
         super();
         this.context = context;
-        this.contactsList = contactsList;
-        this.filteredContactsList = new ContactsList();
-        this.selectedContactsList = new ContactsList();
+        this.contactsListPickerModel = contactsListPickerModel;
+        this.filteredContactsListPickerModel = new ContactsListPickerModel();
+        this.selectedContactsListPickerModel = new ContactsListPickerModel();
         this.filterContactName = "";
     }
 
     public void filter(String filterContactName) {
 
-        filteredContactsList.contactArrayList.clear();
+        filteredContactsListPickerModel.contactArrayList.clear();
 
         if (filterContactName.isEmpty() || filterContactName.length() < 1) {
-            filteredContactsList.contactArrayList.addAll(contactsList.contactArrayList);
+            filteredContactsListPickerModel.contactArrayList.addAll(contactsListPickerModel.contactArrayList);
             this.filterContactName = "";
 
         } else {
             this.filterContactName = filterContactName.toLowerCase().trim();
-            for (int i = 0; i < contactsList.contactArrayList.size(); i++) {
+            for (int i = 0; i < contactsListPickerModel.contactArrayList.size(); i++) {
 
-                if (contactsList.contactArrayList.get(i).name.toLowerCase().contains(filterContactName))
-                    filteredContactsList.addContact(contactsList.contactArrayList.get(i));
+                if (contactsListPickerModel.contactArrayList.get(i).name.toLowerCase().contains(filterContactName))
+                    filteredContactsListPickerModel.addContact(contactsListPickerModel.contactArrayList.get(i));
             }
         }
         notifyDataSetChanged();
 
     }
 
-    public void addContacts(ArrayList<Contact> contacts) {
-        this.contactsList.contactArrayList.addAll(contacts);
+    public void addContacts(ArrayList<ContactPickerModel> contacts) {
+        this.contactsListPickerModel.contactArrayList.addAll(contacts);
         this.filter(this.filterContactName);
 
     }
 
     @Override
     public int getCount() {
-        return filteredContactsList.getCount();
+        return filteredContactsListPickerModel.getCount();
     }
 
     @Override
-    public Contact getItem(int position) {
-        return filteredContactsList.contactArrayList.get(position);
+    public ContactPickerModel getItem(int position) {
+        return filteredContactsListPickerModel.contactArrayList.get(position);
     }
 
     @Override
@@ -89,19 +89,19 @@ public class ContactsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.chkContact.setText(this.filteredContactsList.contactArrayList.get(position).toString());
-        viewHolder.chkContact.setId(Integer.parseInt(this.filteredContactsList.contactArrayList.get(position).id));
-        viewHolder.chkContact.setChecked(alreadySelected(filteredContactsList.contactArrayList.get(position)));
+        viewHolder.chkContact.setText(this.filteredContactsListPickerModel.contactArrayList.get(position).toString());
+        viewHolder.chkContact.setId(Integer.parseInt(this.filteredContactsListPickerModel.contactArrayList.get(position).id));
+        viewHolder.chkContact.setChecked(alreadySelected(filteredContactsListPickerModel.contactArrayList.get(position)));
 
         viewHolder.chkContact.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Contact contact = filteredContactsList.getContact(buttonView.getId());
+                ContactPickerModel contact = filteredContactsListPickerModel.getContact(buttonView.getId());
 
                 if (contact != null && isChecked && !alreadySelected(contact)) {
-                    selectedContactsList.addContact(contact);
+                    selectedContactsListPickerModel.addContact(contact);
                 } else if (contact != null && !isChecked) {
-                    selectedContactsList.removeContact(contact);
+                    selectedContactsListPickerModel.removeContact(contact);
                 }
             }
         });
@@ -109,8 +109,8 @@ public class ContactsListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public boolean alreadySelected(Contact contact) {
-        if (this.selectedContactsList.getContact(Integer.parseInt(contact.id)) != null)
+    public boolean alreadySelected(ContactPickerModel contact) {
+        if (this.selectedContactsListPickerModel.getContact(Integer.parseInt(contact.id)) != null)
             return true;
 
         return false;

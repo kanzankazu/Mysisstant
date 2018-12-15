@@ -27,14 +27,14 @@ public class AcaraSummaryRVAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return 0;
     }
 
+    interface AcaraSummaryRVListener {
+
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    interface AcaraSummaryRVListener {
-
     }
 }

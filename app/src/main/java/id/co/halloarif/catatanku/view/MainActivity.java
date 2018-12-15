@@ -33,6 +33,7 @@ import java.util.Collections;
 import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.presenter.MainListener;
 import id.co.halloarif.catatanku.support.util.SessionUtil;
+import id.co.halloarif.catatanku.view.activity.LoginActivity;
 import id.co.halloarif.catatanku.view.adapter.MainActivityNoteFriendRVAdapter;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) ||
                             ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                             ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_CONTACTS) ||
-                            ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_PHONE_STATE)||
+                            ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_PHONE_STATE) ||
                             ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.RECORD_AUDIO)
                     ) {
                 String[] perm = {
@@ -312,9 +313,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_signout) {
-            Intent intent = new Intent(MainActivity.this, LogRegActivity.class);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
+            overridePendingTransition(R.anim.masuk_dari_kiri_ke_kanan, R.anim.keluar_ke_kanan);
 
             SessionUtil.removeAllSharedPreferences();
         }
@@ -340,7 +342,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
          return super.onOptionsItemSelected(item);
      }*/
-
-
 
 }

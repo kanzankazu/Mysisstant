@@ -27,14 +27,14 @@ public class NoteSummaryRVAdapter extends RecyclerView.Adapter<RecyclerView.View
         return 0;
     }
 
+    interface NoteSummaryRVListener {
+
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
-    }
-
-    interface NoteSummaryRVListener {
-
     }
 }

@@ -12,11 +12,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import id.co.halloarif.catatanku.R;
-import id.co.halloarif.catatanku.model.Contact;
-import id.co.halloarif.catatanku.model.ContactsList;
+import id.co.halloarif.catatanku.model.ContactsListPickerModel;
 import id.co.halloarif.catatanku.support.widget.ContactsLoader;
 import id.co.halloarif.catatanku.view.adapter.ContactsListAdapter;
 
@@ -39,7 +36,7 @@ public class ListContactPickerCheckBox extends AppCompatActivity {
         txtFilter = (EditText) findViewById(R.id.txt_filter);
         txtLoadInfo = (TextView) findViewById(R.id.txt_load_progress);
 
-        contactsListAdapter = new ContactsListAdapter(this, new ContactsList());
+        contactsListAdapter = new ContactsListAdapter(this, new ContactsListPickerModel());
 
         contactsChooser.setAdapter(contactsListAdapter);
 
@@ -67,13 +64,13 @@ public class ListContactPickerCheckBox extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (contactsListAdapter.selectedContactsList.contactArrayList.isEmpty()) {
+                if (contactsListAdapter.selectedContactsListPickerModel.contactArrayList.isEmpty()) {
                     setResult(RESULT_CANCELED);
                 } else {
 
                     Intent resultIntent = new Intent();
 
-                    resultIntent.putParcelableArrayListExtra("SelectedContacts", contactsListAdapter.selectedContactsList.contactArrayList);
+                    resultIntent.putParcelableArrayListExtra("SelectedContacts", contactsListAdapter.selectedContactsListPickerModel.contactArrayList);
                     setResult(RESULT_OK, resultIntent);
 
                 }

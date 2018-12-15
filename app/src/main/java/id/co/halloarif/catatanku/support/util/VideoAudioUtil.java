@@ -9,18 +9,32 @@ import java.io.IOException;
 
 public class VideoAudioUtil {
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
-    private MediaRecorder recorder = null;
-    private int currentFormat = 0;
-    private int output_formats[] = {MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP};
-    private String file_exts[] = {".mp4", ".3gp"};
-    private boolean isSpeakButtonLongPressed;
+    public static MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
+        @Override
+        public void onError(MediaRecorder mr, int what, int extra) {
+            Log.e("Lihat", "onError AlarmActivity : " + what);
+            Log.e("Lihat", "onError AlarmActivity : " + extra);
+        }
+    };
+    public static MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
+        @Override
+        public void onInfo(MediaRecorder mr, int what, int extra) {
+            Log.e("Lihat", "onError AlarmActivity : " + what);
+            Log.e("Lihat", "onError AlarmActivity : " + extra);
+        }
+    };
+    private static String voicePath;
 
     public static void MediaRecorderReady(MediaRecorder recorder) {
         //recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        recorder.setOutputFile(getFilename());
+        try {
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+            recorder.setOutputFile(getFilename());
+        } catch (Exception e) {
+            Log.e("Lihat", "MediaRecorderReady VideoAudioUtil : " + e);
+        }
     }
 
     public static void startRecording(MediaRecorder recorder) {
@@ -36,7 +50,7 @@ public class VideoAudioUtil {
         }
     }
 
-    public static void stopRecording(MediaRecorder recorder) {
+    public static String stopRecording(MediaRecorder recorder) {
         try {
             recorder.stop();
             recorder.reset();
@@ -49,34 +63,20 @@ public class VideoAudioUtil {
         }
         /*recorder.stop();
         recorder.release();*/
+
+        return voicePath;
     }
-
-    public static MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
-        @Override
-        public void onError(MediaRecorder mr, int what, int extra) {
-            Log.e("Lihat", "onError AlarmActivity : " + what);
-            Log.e("Lihat", "onError AlarmActivity : " + extra);
-        }
-    };
-
-    public static MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
-        @Override
-        public void onInfo(MediaRecorder mr, int what, int extra) {
-            Log.e("Lihat", "onError AlarmActivity : " + what);
-            Log.e("Lihat", "onError AlarmActivity : " + extra);
-        }
-    };
 
     public static String getFilename() {
         String filepath = Environment.getExternalStorageDirectory().getPath();
-        Log.d("Lihat", "getFilename AlarmActivity : " + filepath);
 
         File file = new File(filepath, AUDIO_RECORDER_FOLDER);
         if (!file.exists()) {
             file.mkdirs();
         }
 
-        String voicePath = file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp3";;
+        voicePath = file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp3";
+        ;
         Log.d("Lihat", "getFilename AlarmActivity : " + voicePath);
         return (voicePath);
     }

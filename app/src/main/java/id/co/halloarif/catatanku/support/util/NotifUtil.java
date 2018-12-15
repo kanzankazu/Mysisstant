@@ -15,18 +15,46 @@ import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import id.co.halloarif.catatanku.R;
 
 public class NotifUtil {
 
-    public static void setNotification(Context context, @Nullable String title, @Nullable String text, int smallIcon, int bigIcon, boolean isNotCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID) {
+    public static void setNotification(Context context, @Nullable String title, @Nullable String text, int smallIcon, int bigIcon, boolean isCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID, @Nullable String ringtone) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), bigIcon);
-        setNotification(context, title, text, smallIcon, bitmap, isNotCancelAble, pendingIntent, NOTIFICATION_ID);
+        setNotification(context, title, text, smallIcon, bitmap, isCancelAble, pendingIntent, NOTIFICATION_ID, ringtone);
     }
 
-    public static void setNotificationStandart(Context context, @Nullable String title, @Nullable String text, int smallIcon, int bigIcon, boolean isNotCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID) {
+    public static void setNotification(Context context, @Nullable String title, @Nullable String text, int smallIcon, Bitmap bigIcon, boolean isCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID, @Nullable String ringtone) {
+
+        /*Uri uri;
+        if (!TextUtils.isEmpty(ringtone)) {
+            uri = ;
+        } else {
+            uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }*/
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(smallIcon)
+                .setLargeIcon(bigIcon)
+                .setAutoCancel(true)
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(isCancelAble)
+                .setTicker(title)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setSound(!TextUtils.isEmpty(ringtone) ? Uri.parse(ringtone) : RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+    }
+
+    public static void setNotificationStandart(Context context, @Nullable String title, @Nullable String text, int smallIcon, int bigIcon, boolean isCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID, Uri ringtone) {
         /*//set intents and pending intents to call service on click of "dismiss" action button of notification
         Intent dismissIntent = new Intent(context, MyService.class);
         dismissIntent.setAction(ACTION_DISMISS);
@@ -51,26 +79,6 @@ public class NotifUtil {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         //to post your notification to the notification bar with a id. If a notification with same id already exists, it will get replaced with updated information.
         notificationManager.notify(0, builder.build());
-    }
-
-    public static void setNotification(Context context, @Nullable String title, @Nullable String text, int smallIcon, Bitmap bigIcon, boolean isNotCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID) {
-
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-                .setAutoCancel(true)
-                .setOngoing(isNotCancelAble)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setSound(uri);
-        //.setProgress()
-        ;
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
     public static void lll(Activity context, Class<?> targetClass) {
@@ -110,7 +118,7 @@ public class NotifUtil {
             mNotificationManager.notify(NOTIF_ID, mNotification);
         } else if (apiVersion >= Build.VERSION_CODES.HONEYCOMB) {
             mBuilder.setSmallIcon(R.mipmap.ic_launcher)
-                    // .setAutoCancel(isNotCancelAble) //Do not clear the notification
+                    // .setAutoCancel(isCancelAble) //Do not clear the notification
                     .setOngoing(true)
                     //.setContentIntent(pendingIntent)
                     //.setContent(mRemoteViews)

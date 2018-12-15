@@ -108,12 +108,6 @@ public class InputValidUtil {
         }
     }
 
-    public void setEditTextMaxLength(int length, EditText editText) {
-        InputFilter[] filterArray = new InputFilter[1];
-        filterArray[0] = new InputFilter.LengthFilter(length);
-        editText.setFilters(filterArray);
-    }
-
     public static boolean isLenghtChar(EditText editText, int minChar) {
         String s = editText.getText().toString().trim();
         return isLenghtChar(s, minChar);
@@ -121,5 +115,11 @@ public class InputValidUtil {
 
     public static boolean isLenghtChar(String s, int minChar) {
         return s.length() < minChar;
+    }
+
+    public void setEditTextMaxLength(int length, EditText editText) {
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(length);
+        editText.setFilters(filterArray);
     }
 }

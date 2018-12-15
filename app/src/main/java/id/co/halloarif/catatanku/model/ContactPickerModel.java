@@ -3,38 +3,36 @@ package id.co.halloarif.catatanku.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Contact implements Parcelable {
+public class ContactPickerModel implements Parcelable {
+    public static final Creator<ContactPickerModel> CREATOR = new Creator<ContactPickerModel>() {
+        @Override
+        public ContactPickerModel createFromParcel(Parcel in) {
+            return new ContactPickerModel(in);
+        }
+
+        @Override
+        public ContactPickerModel[] newArray(int size) {
+            return new ContactPickerModel[size];
+        }
+    };
     public String id, name, phone, label;
 
-    public Contact() {
+    public ContactPickerModel() {
     }
 
-    public Contact(String id, String name, String phone, String label) {
+    public ContactPickerModel(String id, String name, String phone, String label) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.label = label;
     }
 
-    protected Contact(Parcel in) {
+    protected ContactPickerModel(Parcel in) {
         id = in.readString();
         name = in.readString();
         phone = in.readString();
         label = in.readString();
     }
-
-    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
-        @Override
-        public Contact createFromParcel(Parcel in) {
-            return new Contact(in);
-        }
-
-        @Override
-        public Contact[] newArray(int size) {
-            return new Contact[size];
-        }
-    };
-
 
     @Override
     public String toString() {

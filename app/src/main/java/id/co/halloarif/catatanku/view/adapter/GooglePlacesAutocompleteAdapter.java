@@ -27,15 +27,15 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
     private static final String API_KEY = "your_api_key";
     private ArrayList<String> resultList;
     private Context context = null;
+
     public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         this.context = context;
     }
 
-
     @Override
     public int getCount() {
-        if(resultList != null)
+        if (resultList != null)
             return resultList.size();
         else
             return 0;
@@ -45,7 +45,6 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
     public String getItem(int index) {
         return resultList.get(index);
     }
-
 
     @SuppressLint("LongLogTag")
     public ArrayList<String> autocomplete(String input) {
@@ -83,7 +82,7 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
 
         try {
             // Create a JSON object hierarchy from the results
-            Log.d("yo",jsonResults.toString());
+            Log.d("yo", jsonResults.toString());
             JSONObject jsonObj = new JSONObject(jsonResults.toString());
             JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
 
@@ -101,7 +100,6 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
 
         return descriptionList;
     }
-
 
     @Override
     public Filter getFilter() {
