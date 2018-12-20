@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.adapter;
+package id.co.halloarif.catatanku.view.activity.LogReg.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import id.co.halloarif.catatanku.R;
 
-public class MainActivityNoteFriendRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainActivityActivityRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
     @Override

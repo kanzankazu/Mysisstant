@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.activity;
+package id.co.halloarif.catatanku.view.activity.LogReg;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

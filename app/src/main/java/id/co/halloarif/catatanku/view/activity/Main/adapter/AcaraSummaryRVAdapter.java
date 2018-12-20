@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.adapter;
+package id.co.halloarif.catatanku.view.activity.Main.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

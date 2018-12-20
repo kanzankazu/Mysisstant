@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.activity;
+package id.co.halloarif.catatanku.view.activity.LogReg;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -80,14 +80,14 @@ public class LoginActivity extends AppCompatActivity {
                     InputValidUtil.errorET(etLogRegPassword2fvbi, "Data kosong");
                 } else {
                     if (InputValidUtil.isValidatePhoneNumber(etLogRegNamefvbi.getText().toString().trim()) || InputValidUtil.isValidateEmail(etLogRegNamefvbi.getText().toString().trim())) {
-                        Toast.makeText(getApplicationContext(), ISeasonConfig.SUCCESS, Toast.LENGTH_SHORT).show();
-                        moveToMain();
-                    } else {
                         if (InputValidUtil.isLenghtChar(etLogRegPassword2fvbi, 6)) {
-                            InputValidUtil.errorET(etLogRegPassword2fvbi, "Password need 6 character or more");
+                            Toast.makeText(getApplicationContext(), ISeasonConfig.SUCCESS, Toast.LENGTH_SHORT).show();
+                            moveToMain();
                         } else {
-                            InputValidUtil.errorET(etLogRegNamefvbi, "Salah format");
+                            InputValidUtil.errorET(etLogRegPassword2fvbi, "Password need 6 character or more");
                         }
+                    } else {
+                        InputValidUtil.errorET(etLogRegNamefvbi, "Salah format");
                     }
                 }
             }

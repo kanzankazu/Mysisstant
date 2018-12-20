@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view;
+package id.co.halloarif.catatanku.view.activity.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import id.co.halloarif.catatanku.R;
-import id.co.halloarif.catatanku.view.adapter.NoteSummaryRVAdapter;
+import id.co.halloarif.catatanku.view.activity.Main.adapter.NoteSummaryRVAdapter;
 
 public class NoteSummaryActivity extends AppCompatActivity {
 

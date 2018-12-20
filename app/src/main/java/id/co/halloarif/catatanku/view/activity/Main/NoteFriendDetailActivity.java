@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.activity.Support;
+package id.co.halloarif.catatanku.view.activity.Main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

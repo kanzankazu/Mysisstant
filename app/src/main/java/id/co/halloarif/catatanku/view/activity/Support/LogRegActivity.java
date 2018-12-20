@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view;
+package id.co.halloarif.catatanku.view.activity.Support;
 
 import android.accounts.AccountManager;
 import android.content.Intent;

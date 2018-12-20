@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.activity;
+package id.co.halloarif.catatanku.view.activity.LogReg;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.support.util.SystemUtil;
-import id.co.halloarif.catatanku.view.MainActivity;
 
 public class IntroActivity extends AppCompatActivity {
 

@@ -15,12 +15,12 @@ import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.model.ContactPickerModel;
 import id.co.halloarif.catatanku.model.ContactsListPickerModel;
 
-public class ContactsListAdapter extends BaseAdapter {
+public class ListContactPickerAdapter extends BaseAdapter {
     public Context context;
     public ContactsListPickerModel contactsListPickerModel, filteredContactsListPickerModel, selectedContactsListPickerModel;
     public String filterContactName;
 
-    public ContactsListAdapter(Context context, ContactsListPickerModel contactsListPickerModel) {
+    public ListContactPickerAdapter(Context context, ContactsListPickerModel contactsListPickerModel) {
 
         super();
         this.context = context;

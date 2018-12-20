@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view;
+package id.co.halloarif.catatanku.view.activity.Main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import id.co.halloarif.catatanku.R;
-import id.co.halloarif.catatanku.support.widget.OnSwipeTouchListener;
-import id.co.halloarif.catatanku.view.adapter.AcaraSummaryRVAdapter;
+import id.co.halloarif.catatanku.presenter.OnSwipeTouchListener;
+import id.co.halloarif.catatanku.view.activity.Main.adapter.AcaraSummaryRVAdapter;
 
 import static id.co.halloarif.catatanku.view.activity.LogReg.LoginActivity.*;
 

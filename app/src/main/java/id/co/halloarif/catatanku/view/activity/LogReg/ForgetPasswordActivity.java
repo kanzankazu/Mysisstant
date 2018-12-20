@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view.activity;
+package id.co.halloarif.catatanku.view.activity.LogReg;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +55,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (InputValidUtil.isEmptyField(etLogRegNamefvbi)) {
                     InputValidUtil.errorET(etLogRegNamefvbi, "Data kosong");
-                } else {
+                }  else {
                     if (InputValidUtil.isValidatePhoneNumber(etLogRegNamefvbi.getText().toString().trim()) || InputValidUtil.isValidateEmail(etLogRegNamefvbi.getText().toString().trim())) {
                         Toast.makeText(getApplicationContext(), ISeasonConfig.SUCCESS, Toast.LENGTH_SHORT).show();
                     } else {

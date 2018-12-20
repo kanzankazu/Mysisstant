@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view;
+package id.co.halloarif.catatanku.view.activity.Support;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,8 +14,7 @@ import android.widget.TextView;
 
 import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.model.ContactsListPickerModel;
-import id.co.halloarif.catatanku.support.widget.ContactsLoader;
-import id.co.halloarif.catatanku.view.adapter.ContactsListAdapter;
+import id.co.halloarif.catatanku.view.adapter.ListContactPickerAdapter;
 
 public class ListContactPickerCheckBox extends AppCompatActivity {
 
@@ -23,8 +22,8 @@ public class ListContactPickerCheckBox extends AppCompatActivity {
     Button btnDone;
     EditText txtFilter;
     TextView txtLoadInfo;
-    ContactsListAdapter contactsListAdapter;
-    ContactsLoader contactsLoader;
+    ListContactPickerAdapter contactsListAdapter;
+    ListContactPickerContactsLoader contactsLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,7 @@ public class ListContactPickerCheckBox extends AppCompatActivity {
         txtFilter = (EditText) findViewById(R.id.txt_filter);
         txtLoadInfo = (TextView) findViewById(R.id.txt_load_progress);
 
-        contactsListAdapter = new ContactsListAdapter(this, new ContactsListPickerModel());
+        contactsListAdapter = new ListContactPickerAdapter(this, new ContactsListPickerModel());
 
         contactsChooser.setAdapter(contactsListAdapter);
 
@@ -93,7 +92,7 @@ public class ListContactPickerCheckBox extends AppCompatActivity {
 
         try {
             //Running AsyncLoader with adapter and  filter
-            contactsLoader = new ContactsLoader(this, contactsListAdapter);
+            contactsLoader = new ListContactPickerContactsLoader(this, contactsListAdapter);
             contactsLoader.txtProgress = txtLoadInfo;
             contactsLoader.execute(filter);
         } catch (Exception e) {

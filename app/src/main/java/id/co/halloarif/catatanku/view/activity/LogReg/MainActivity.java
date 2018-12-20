@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view;
+package id.co.halloarif.catatanku.view.activity.LogReg;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -33,14 +33,17 @@ import java.util.Collections;
 import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.presenter.MainListener;
 import id.co.halloarif.catatanku.support.util.SessionUtil;
-import id.co.halloarif.catatanku.view.activity.LoginActivity;
-import id.co.halloarif.catatanku.view.adapter.MainActivityNoteFriendRVAdapter;
+import id.co.halloarif.catatanku.view.activity.LogReg.adapter.MainActivityActivityRVAdapter;
+import id.co.halloarif.catatanku.view.activity.Main.AcaraSummaryActivity;
+import id.co.halloarif.catatanku.view.activity.Main.AlarmSummaryActivity;
+import id.co.halloarif.catatanku.view.activity.Main.NoteSummaryActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQ_PERM_CODE = 12;
-    private ImageView ivMainProfilefvbi;
-    private TextView tvMainMottofvbi;
+    private ImageView ivMainProfilePhotofvbi;
+    private TextView tvMainProfileNamefvbi;
+    private TextView tvMainProfileMottofvbi;
     private LinearLayout cvMainAlarmfvbi;
     private LinearLayout cvMainAcarafvbi;
     private LinearLayout cvMainNotefvbi;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    private MainActivityNoteFriendRVAdapter adapter;
+    private MainActivityActivityRVAdapter adapter;
     private MainListener mainListener;
 
     private boolean doubleBackToExitPressedOnce;
@@ -200,8 +203,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initComponent() {
-        ivMainProfilefvbi = (ImageView) findViewById(R.id.ivMainProfile);
-        tvMainMottofvbi = (TextView) findViewById(R.id.tvMainMotto);
+        ivMainProfilePhotofvbi = (ImageView) findViewById(R.id.ivMainProfilePhoto);
+        tvMainProfileNamefvbi = (TextView) findViewById(R.id.tvMainProfileName);
+        tvMainProfileMottofvbi = (TextView) findViewById(R.id.tvMainProfileMotto);
         cvMainAlarmfvbi = (LinearLayout) findViewById(R.id.cvMainAlarm);
         cvMainAcarafvbi = (LinearLayout) findViewById(R.id.cvMainAcara);
         cvMainNotefvbi = (LinearLayout) findViewById(R.id.cvMainNote);
@@ -209,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initContent() {
-        adapter = new MainActivityNoteFriendRVAdapter();
+        adapter = new MainActivityActivityRVAdapter();
         rvMainNoteFriendfvbi.setAdapter(adapter);
         rvMainNoteFriendfvbi.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -300,25 +304,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        Log.d("Lihat", "onNavigationItemSelected MainActivity : " + id);
 
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.nav_signout) {
+        if (id == R.id.menuSettingLogout) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.masuk_dari_kiri_ke_kanan, R.anim.keluar_ke_kanan);
 
             SessionUtil.removeAllSharedPreferences();
+            Log.d("Lihat", "onNavigationItemSelected MainActivity : " + "menuSettingLogout");
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.support.widget;
+package id.co.halloarif.catatanku.view.activity.Support;
 
 import android.content.ContentResolver;
 import android.content.Context;

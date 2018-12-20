@@ -1,4 +1,4 @@
-package id.co.halloarif.catatanku.view;
+package id.co.halloarif.catatanku.view.activity.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import java.util.List;
 import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.support.util.DateTimeUtil;
 import id.co.halloarif.catatanku.support.util.SystemUtil;
-import id.co.halloarif.catatanku.view.adapter.GoogleMapsActivity;
+import id.co.halloarif.catatanku.view.activity.Support.PlacesAutoCompleteActivity;
 
 public class AcaraActivity extends AppCompatActivity {
 
@@ -192,7 +192,7 @@ public class AcaraActivity extends AppCompatActivity {
         llAcaraInputLokasifvbi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AcaraActivity.this, GoogleMapsActivity.class);
+                Intent intent = new Intent(AcaraActivity.this, PlacesAutoCompleteActivity.class);
                 startActivityForResult(intent, REQ_CODE_MAPS);
                 //finish();
             }
