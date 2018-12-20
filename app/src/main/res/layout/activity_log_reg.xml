@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     android:orientation="vertical"
-    tools:context=".view.LogRegActivity">
+    tools:context=".view.activity.Support.LogRegActivity">
 
     <ScrollView
         android:layout_width="match_parent"

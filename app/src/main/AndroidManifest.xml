@@ -26,12 +26,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:configChanges="orientation|screenSize"
+            android:value="@string/google_maps_key" />
 
         <service
             android:name=".service.PopupService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".service.SpeakService"
             android:enabled="true"
@@ -41,14 +44,13 @@
             android:name=".service.AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
-
         <receiver
             android:name=".service.Alarm"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".view.activity.LogReg.LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,61 +58,62 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".view.activity.RegisterActivity"
+            android:name=".view.activity.LogReg.RegisterActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".view.activity.IntroActivity"
+            android:name=".view.activity.LogReg.IntroActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".view.activity.ForgetPasswordActivity"
+            android:name=".view.activity.LogReg.ForgetPasswordActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".view.activity.IntroSuccessActivity"
+            android:name=".view.activity.LogReg.IntroSuccessActivity"
             android:theme="@style/AppTheme.FullScreen" />
-
         <activity
-            android:name=".view.LogRegActivity"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+            android:name=".view.activity.Support.LogRegActivity"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.LogReg.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.AlarmSummaryActivity"
+            android:name=".view.activity.Main.AlarmSummaryActivity"
             android:label="@string/title_activity_alarm_summary"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.AcaraSummaryActivity"
+            android:name=".view.activity.Main.AcaraSummaryActivity"
             android:label="@string/title_activity_alarm_summary"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.NoteSummaryActivity"
+            android:name=".view.activity.Main.NoteSummaryActivity"
             android:label="@string/title_activity_note_summary"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.AcaraActivity"
+            android:name=".view.activity.Main.AcaraActivity"
             android:label="Acara Input"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.AlarmActivity"
+            android:name=".view.activity.Main.AlarmActivity"
             android:label="Alarm Input"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.NoteActivity"
+            android:name=".view.activity.Main.NoteActivity"
             android:label="Note Input"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.NoteFriendDetailActivity"
+            android:name=".view.activity.Main.NoteFriendDetailActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".view.RecordingActivity"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:name=".view.activity.Support.ListContactPickerCheckBox"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.adapter.GoogleMapsActivity"
-            android:theme="@style/AppTheme.FullScreen" />
-        <activity android:name=".view.ListContactPickerCheckBox" />
+            android:name=".view.activity.LogReg.UserProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.Support.PlacesAutoCompleteActivity"
+            android:label="map"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -102,5 +102,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="error_audio_recorder">Audio recorder error: %1$s</string>
+    <string name="title_activity_google_maps">Map</string>
+    <string name="autocomplete_hint">Search a Place</string>
 
 </resources>

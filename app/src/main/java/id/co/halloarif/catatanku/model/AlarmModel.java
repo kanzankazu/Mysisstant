@@ -3,6 +3,7 @@ package id.co.halloarif.catatanku.model;
 public class AlarmModel {
     private String alarm_id;
     private String alarm_sub_id;
+    private String alarm_title;
     private String alarm_hour;
     private String alarm_minute;
     private String alarm_day;
@@ -12,6 +13,7 @@ public class AlarmModel {
     private String alarm_voice_uri;
     private String alarm_ringtone;
     private String alarm_ringtone_uri;
+    private int alarm_is_Active;
 
     public String getAlarm_id() {
         return alarm_id;
@@ -99,5 +101,21 @@ public class AlarmModel {
 
     public void setAlarm_ringtone_uri(String alarm_ringtone_uri) {
         this.alarm_ringtone_uri = alarm_ringtone_uri;
+    }
+
+    public void setAlarm_title(String alarm_title) {
+        this.alarm_title = alarm_title;
+    }
+
+    public String getAlarm_title() {
+        return alarm_title;
+    }
+
+    public int getAlarm_is_Active() {
+        return alarm_is_Active;
+    }
+
+    public void setAlarm_is_Active(int alarm_is_active) {
+        this.alarm_is_Active = alarm_is_active;
     }
 }

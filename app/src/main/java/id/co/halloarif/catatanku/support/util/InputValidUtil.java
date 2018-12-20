@@ -114,7 +114,7 @@ public class InputValidUtil {
     }
 
     public static boolean isLenghtChar(String s, int minChar) {
-        return s.length() < minChar;
+        return s.length() >= minChar;
     }
 
     public void setEditTextMaxLength(int length, EditText editText) {

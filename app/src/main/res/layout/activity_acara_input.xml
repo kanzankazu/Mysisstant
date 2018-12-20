@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.AlarmActivity">
+    tools:context=".view.activity.Main.AlarmActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nsvAcaraInput"
@@ -124,56 +124,12 @@
                                 android:id="@+id/whpAlarmInputTanggal1Mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:visibility="visible"
+                                app:picker_curved="true"
                                 app:picker_selectedTextColor="@color/colorPrimary"
                                 app:picker_selectorColor="@color/colorAccent"
-                                app:picker_todayText="Hari Ini"
-                                app:picker_curved="true"
-                                app:picker_textColor="@color/colorAccent" />
-
-                            <com.github.florent37.singledateandtimepicker.widget.WheelDayPicker
-                                android:id="@+id/whpAlarmInputTanggalMulai"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:wheel_atmospheric="true"
-                                app:wheel_curtain="true"
-                                app:wheel_curved="true"
-                                app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
-                                app:wheel_item_text_color="@color/colorAccent"
-                                app:wheel_same_width="true"
-                                app:wheel_selected_item_text_color="@color/colorPrimary"
-                                app:wheel_visible_item_count="5" />
-
-                            <com.github.florent37.singledateandtimepicker.widget.WheelHourPicker
-                                android:id="@+id/whpAlarmInputJamMulai"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:wheel_atmospheric="true"
-                                app:wheel_curtain="true"
-                                app:wheel_curved="true"
-                                app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
-                                app:wheel_item_text_color="@color/colorAccent"
-                                app:wheel_same_width="true"
-                                app:wheel_selected_item_text_color="@color/colorPrimary"
-                                app:wheel_visible_item_count="5" />
-
-                            <com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker
-                                android:id="@+id/whpAlarmInputMenitMulai"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:wheel_atmospheric="true"
-                                app:wheel_curtain="true"
-                                app:wheel_curved="true"
-                                app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
-                                app:wheel_item_text_color="@color/colorAccent"
-                                app:wheel_same_width="true"
-                                app:wheel_selected_item_text_color="@color/colorPrimary"
-                                app:wheel_visible_item_count="5" />
+                                app:picker_textColor="@color/colorAccent"
+                                app:picker_todayText="Hari Ini" />
 
                         </LinearLayout>
 
@@ -258,50 +214,16 @@
                             android:animateLayoutChanges="true"
                             android:orientation="horizontal">
 
-                            <com.github.florent37.singledateandtimepicker.widget.WheelDayPicker
-                                android:id="@+id/whpAlarmInputTanggalSelesai"
+                            <com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker
+                                android:id="@+id/whpAlarmInputTanggal1Selesai"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:wheel_atmospheric="true"
-                                app:wheel_curtain="true"
-                                app:wheel_curved="true"
-                                app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
-                                app:wheel_item_text_color="@color/colorAccent"
-                                app:wheel_same_width="true"
-                                app:wheel_selected_item_text_color="@color/colorPrimary"
-                                app:wheel_visible_item_count="5" />
-
-                            <com.github.florent37.singledateandtimepicker.widget.WheelHourPicker
-                                android:id="@+id/whpAlarmInputJamSelesai"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:wheel_atmospheric="true"
-                                app:wheel_curtain="true"
-                                app:wheel_curved="true"
-                                app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
-                                app:wheel_item_text_color="@color/colorAccent"
-                                app:wheel_same_width="true"
-                                app:wheel_selected_item_text_color="@color/colorPrimary"
-                                app:wheel_visible_item_count="5" />
-
-                            <com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker
-                                android:id="@+id/whpAlarmInputMenitSelesai"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                app:wheel_atmospheric="true"
-                                app:wheel_curtain="true"
-                                app:wheel_curved="true"
-                                app:wheel_indicator="true"
-                                app:wheel_indicator_color="@color/colorPrimary"
-                                app:wheel_item_text_color="@color/colorAccent"
-                                app:wheel_same_width="true"
-                                app:wheel_selected_item_text_color="@color/colorPrimary"
-                                app:wheel_visible_item_count="5" />
+                                android:visibility="visible"
+                                app:picker_curved="true"
+                                app:picker_selectedTextColor="@color/colorPrimary"
+                                app:picker_selectorColor="@color/colorAccent"
+                                app:picker_textColor="@color/colorAccent"
+                                app:picker_todayText="Hari Ini" />
 
                         </LinearLayout>
 

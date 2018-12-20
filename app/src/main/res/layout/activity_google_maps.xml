@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.adapter.GoogleMapsActivity">
+    android:layout_height="match_parent">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
@@ -17,27 +15,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:cardPreventCornerOverlap="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="match_parent" />
-
             <EditText
-                android:id="@+id/edEnterLocation"
+                android:id="@+id/etGoogleMapsInput"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_alignParentTop="true"
-                android:layout_weight="1" />
+                android:layout_height="50dp"
+                android:layout_toLeftOf="@id/ibGoogleMapsInputDelete"
+                android:background="@drawable/edit_text_style"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="9dp"
+                android:hint="Search Palce"
+                android:paddingLeft="8dp"
+                android:paddingRight="9dp"
+                android:singleLine="true"
+                android:textColor="@android:color/primary_text_light"
+                android:textColorHint="@color/grey" />
 
             <AutoCompleteTextView
-                android:id="@+id/actvEnterLocation"
+                android:id="@+id/actvGoogleMapsInput"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentTop="true"
@@ -45,9 +48,17 @@
                 android:visibility="gone" />
 
             <ImageButton
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                android:id="@+id/ibGoogleMapsInputDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@null"
+                android:src="@drawable/ic_delete"
+                android:visibility="gone" />
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
@@ -56,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/llMapsInput"
         android:alpha="0.8"
+        android:visibility="gone"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -64,8 +76,8 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/listView1"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvGoogleMapsInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

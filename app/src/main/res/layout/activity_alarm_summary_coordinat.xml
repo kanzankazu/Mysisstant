@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.AlarmSummaryActivity">
+    tools:context=".view.activity.Main.AlarmSummaryActivity">
 
     <include layout="@layout/activity_alarm_summary_content" />
 
@@ -29,9 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/ivAlarmSummaryCreate"
             android:layout_centerHorizontal="true"
-            android:alpha="0.3"
+            android:alpha="1"
             android:gravity="center"
-            android:text="Swipe up \n to \n create"
+            android:text="Swipe up "
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <ImageView
@@ -42,6 +43,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/rectangle_top"
+            android:backgroundTint="@color/colorPrimary"
             android:src="@drawable/ic_back_top" />
     </RelativeLayout>
 

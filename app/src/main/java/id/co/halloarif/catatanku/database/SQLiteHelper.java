@@ -15,12 +15,13 @@ import id.co.halloarif.catatanku.support.util.SessionUtil;
 public class SQLiteHelper extends SQLiteOpenHelper {
     // Databases information
     public static final String DB_NM = "catatatan.db";
-    public static final int DB_VER = 3;
+    public static final int DB_VER = 4;
 
     public static String TableAlarm = "tabAlarmData";
     private static final String query_delete_table_Alarm = "DROP TABLE IF EXISTS " + TableAlarm;
     public static String KEY_alarm_id = "alarm_id";
     public static String KEY_alarm_sub_id = "alarm_sub_id";
+    public static String KEY_alarm_title = "alarm_title";
     public static String KEY_alarm_hour = "alarm_hour";
     public static String KEY_alarm_minute = "alarm_minute";
     public static String KEY_alarm_day = "alarm_day";
@@ -34,6 +35,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String query_add_table_Alarm = "CREATE TABLE IF NOT EXISTS " + TableAlarm + "("
             + KEY_alarm_id + " TEXT PRIMARY KEY , "
             + KEY_alarm_sub_id + " TEXT, "
+            + KEY_alarm_title + " TEXT, "
             + KEY_alarm_hour + " INTEGER, "
             + KEY_alarm_minute + " INTEGER, "
             + KEY_alarm_day + " TEXT, "
@@ -43,7 +45,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             + KEY_alarm_voice_uri + " TEXT, "
             + KEY_alarm_ringtone + " TEXT, "
             + KEY_alarm_ringtone_uri + " TEXT, "
-            + KEY_alarm_is_active + " TEXT) ";
+            + KEY_alarm_is_active + " INTEGER) ";
 
     public SQLiteHelper(Context context) {
         super(context, DB_NM, null, DB_VER);
@@ -82,7 +84,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void alarmSave(AlarmModel model) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_alarm_id, model.getAlarm_id());
         contentValues.put(KEY_alarm_sub_id, model.getAlarm_sub_id());
+        contentValues.put(KEY_alarm_title, model.getAlarm_title());
+        contentValues.put(KEY_alarm_hour, model.getAlarm_hour());
+        contentValues.put(KEY_alarm_minute, model.getAlarm_minute());
+        contentValues.put(KEY_alarm_day, model.getAlarm_day());
+        contentValues.put(KEY_alarm_friend, model.getAlarm_friend());
+        contentValues.put(KEY_alarm_friend_no, model.getAlarm_friend_no());
+        contentValues.put(KEY_alarm_voice, model.getAlarm_voice());
+        contentValues.put(KEY_alarm_voice_uri, model.getAlarm_voice_uri());
+        contentValues.put(KEY_alarm_ringtone, model.getAlarm_ringtone());
+        contentValues.put(KEY_alarm_ringtone_uri, model.getAlarm_ringtone_uri());
+        contentValues.put(KEY_alarm_is_active, 1);
 
         db.insert(TableAlarm, null, contentValues);
         db.close();
@@ -92,20 +106,31 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_alarm_sub_id, model.getAlarm_sub_id());
+        contentValues.put(KEY_alarm_title, model.getAlarm_title());
+        contentValues.put(KEY_alarm_hour, model.getAlarm_hour());
+        contentValues.put(KEY_alarm_minute, model.getAlarm_minute());
+        contentValues.put(KEY_alarm_day, model.getAlarm_day());
+        contentValues.put(KEY_alarm_friend, model.getAlarm_friend());
+        contentValues.put(KEY_alarm_friend_no, model.getAlarm_friend_no());
+        contentValues.put(KEY_alarm_voice, model.getAlarm_voice());
+        contentValues.put(KEY_alarm_voice_uri, model.getAlarm_voice_uri());
+        contentValues.put(KEY_alarm_ringtone, model.getAlarm_ringtone());
+        contentValues.put(KEY_alarm_ringtone_uri, model.getAlarm_ringtone_uri());
 
         db.update(TableAlarm, contentValues, KEY_alarm_id + " = ? ", new String[]{id});
         db.close();
     }
 
-    public ArrayList<AlarmModel> alarmsGet(@Nullable String id) {
+    public ArrayList<AlarmModel> alarmsGet() {
         ArrayList<AlarmModel> modelList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TableAlarm, null, KEY_alarm_id + " = ? ", new String[]{id}, null, null, null);
+        Cursor cursor = db.query(TableAlarm, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 AlarmModel model = new AlarmModel();
                 model.setAlarm_id(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_id)));
                 model.setAlarm_sub_id(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_sub_id)));
+                model.setAlarm_title(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_title)));
                 model.setAlarm_hour(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_hour)));
                 model.setAlarm_minute(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_minute)));
                 model.setAlarm_day(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_day)));
@@ -115,6 +140,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 model.setAlarm_voice_uri(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_voice_uri)));
                 model.setAlarm_ringtone(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_ringtone)));
                 model.setAlarm_ringtone_uri(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_ringtone_uri)));
+                model.setAlarm_is_Active(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_alarm_ringtone_uri)));
                 modelList.add(model);
             } while (cursor.moveToNext());
         }
@@ -162,6 +188,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         AlarmModel model = new AlarmModel();
         model.setAlarm_id(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_id)));
         model.setAlarm_sub_id(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_sub_id)));
+        model.setAlarm_title(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_title)));
         model.setAlarm_hour(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_hour)));
         model.setAlarm_minute(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_minute)));
         model.setAlarm_day(cursor.getString(cursor.getColumnIndexOrThrow(KEY_alarm_day)));

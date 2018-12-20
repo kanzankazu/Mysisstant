@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.NoteSummaryActivity"
+    tools:context=".view.activity.Main.NoteSummaryActivity"
     tools:showIn="@layout/activity_note_summary_coordinat">
 
     <android.support.v7.widget.RecyclerView

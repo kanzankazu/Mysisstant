@@ -63,13 +63,13 @@ public class DateTimeAlarmUtil extends DateTimeUtil {
      * @param pendingIntent
      * @param hourOfDay
      * @param minute
-     * @param weekOfWeek    sun 1,mon 2, tue 3, wed 4, thu 5, fri 6, sat 7
+     * @param dayOfWeek    sun 1,mon 2, tue 3, wed 4, thu 5, fri 6, sat 7
      */
-    public static void setAlarmRepeatDay(Activity activity, PendingIntent pendingIntent, int hourOfDay, int minute, int weekOfWeek) {
+    public static void setAlarmRepeatDay(Activity activity, PendingIntent pendingIntent, int hourOfDay, int minute, int dayOfWeek) {
         Calendar calNow = Calendar.getInstance();
         Calendar calSet = (Calendar) calNow.clone();
 
-        calSet.set(Calendar.DAY_OF_WEEK, weekOfWeek);
+        calSet.set(Calendar.DAY_OF_WEEK, dayOfWeek);
         calSet.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calSet.set(Calendar.MINUTE, minute);
         calSet.set(Calendar.SECOND, 0);
@@ -78,6 +78,7 @@ public class DateTimeAlarmUtil extends DateTimeUtil {
         if (calSet.compareTo(calNow) <= 0) {
             //jika ternyata waktu lewat maka alarm akan di atur untuk besok
             calSet.add(Calendar.DATE, 1);
+            Toast.makeText(activity, "Alarm Has set At " + hourOfDay + ":" + minute + " Tomorrow", Toast.LENGTH_SHORT).show();
         }
 
         AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
@@ -90,6 +91,7 @@ public class DateTimeAlarmUtil extends DateTimeUtil {
             Log.v("AlarmManager", "Starting AlarmManager for < KITKAT version");
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calSet.getTimeInMillis(), WEEK_MILLIS, pendingIntent);
         }
+
     }
 
     public static void cancelAlarm(Activity activity, PendingIntent pendingIntent) {

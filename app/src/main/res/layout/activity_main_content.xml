@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.MainActivity"
+    tools:context=".view.activity.LogReg.MainActivity"
     tools:showIn="@layout/activity_main_coordinat">
 
     <RelativeLayout
@@ -17,44 +17,64 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/ivMainProfile"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/gallery_photo"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <ImageView
             android:id="@+id/ivMainBackground"
             android:layout_width="match_parent"
-            android:layout_height="325dp"
-            android:adjustViewBounds="true"
+            android:layout_height="310dp"
+            android:layout_alignBottom="@+id/cvMainAlarm"
             android:elevation="-2dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/gallery_city"
-            tools:srcCompat="@tools:sample/backgrounds/scenic[8]" />
+            android:src="@drawable/gallery_city" />
 
-        <TextView
-            android:id="@+id/tvMainMotto"
+        <LinearLayout
+            android:id="@+id/llMainProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivMainProfile"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
+            android:animateLayoutChanges="true"
             android:gravity="center"
-            android:text="Motto"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/ivMainProfilePhoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/gallery_photo" />
+
+            <TextView
+                android:id="@+id/tvMainProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivMainProfilePhoto"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Darmawan Setiawan S"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMainProfileMotto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivMainProfilePhoto"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="Motto"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <android.support.v7.widget.CardView
             android:id="@+id/cvMain"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_below="@+id/tvMainMotto"
+            android:layout_height="100dp"
+            android:layout_below="@+id/llMainProfile"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="50dp"
-            app:cardBackgroundColor="#FFB4B4"
-            app:cardCornerRadius="10dp" />
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,8 +84,8 @@
             android:animateLayoutChanges="true"
             android:elevation="5dp"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <View
                 android:layout_width="1dp"
@@ -75,31 +95,45 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFE7F2"
-                app:cardCornerRadius="10dp">
+                app:cardBackgroundColor="@color/Pink"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp">
 
                 <LinearLayout
                     android:id="@+id/cvMainAlarm"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:animateLayoutChanges="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_alarm_black" />
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_alarm_black"
+                        android:tint="@color/white" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ALARM"
+                        android:gravity="center"
+                        android:text="Alarm"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 
@@ -113,9 +147,11 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFE7F2"
-                app:cardCornerRadius="10dp">
+                app:cardBackgroundColor="@color/Pink"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:id="@+id/cvMainAcara"
@@ -124,20 +160,33 @@
                     android:layout_weight="1"
                     android:animateLayoutChanges="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_event_black" />
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_event_black"
+                        android:tint="@color/white" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ACARA"
+                        android:gravity="center"
+                        android:text="Acara"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -149,9 +198,11 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#FFE7F2"
-                app:cardCornerRadius="10dp">
+                app:cardBackgroundColor="@color/Pink"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:id="@+id/cvMainNote"
@@ -160,20 +211,32 @@
                     android:layout_weight="1"
                     android:animateLayoutChanges="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_note_black" />
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_note_black"
+                        android:tint="@color/white" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CATATAN"
+                        android:gravity="center"
+                        android:text="Pengingat"
+                        android:textColor="@color/white"
+                        android:textSize="12dp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -187,21 +250,23 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="16dp"
+        android:text="Recents"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMainNoteFriend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        tools:listitem="@layout/list_note_friend" />
+        android:layout_marginRight="16dp"
+        tools:listitem="@layout/list_recent_note" />
 
 </LinearLayout>

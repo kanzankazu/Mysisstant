@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="History">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:iconTint="@color/colorAccent"
-                android:title="Share" />
+                android:id="@+id/menuHistoryPengingat"
+                android:icon="@drawable/ic_alarm"
+                android:title="Pengingat"
+                app:actionLayout="@layout/menu_drawer_counter" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/menuHistoryAcara"
+                android:icon="@drawable/ic_event"
+                android:title="Acara" />
             <item
-                android:id="@+id/nav_signout"
+                android:id="@+id/menuHistoryCatatan"
+                android:icon="@drawable/ic_note_black"
+                android:title="Catatan" />
+        </menu>
+    </item>
+
+    <item android:title="Setelan">
+        <menu>
+            <item
+                android:id="@+id/menuSettingSet"
+                android:icon="@drawable/ic_setting"
+                android:title="Pengaturan" />
+            <item
+                android:id="@+id/menuSettingHelp"
+                android:icon="@drawable/ic_help"
+                android:title="Pusat Bantuan" />
+            <item
+                android:id="@+id/menuSettingLogout"
                 android:icon="@drawable/ic_logout"
-                android:title="SignOut" />
+                android:title="Logout" />
         </menu>
     </item>
 
