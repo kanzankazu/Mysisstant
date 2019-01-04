@@ -1,7 +1,9 @@
 package id.co.halloarif.catatanku.view.activity.Support;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -10,16 +12,20 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -38,7 +44,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import id.co.halloarif.catatanku.ISeasonConfig;
 import id.co.halloarif.catatanku.R;
+import id.co.halloarif.catatanku.support.util.SystemUtil;
 import id.co.halloarif.catatanku.view.adapter.PlacesAutoCompleteAdapter;
 
 public class PlacesAutoCompleteActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -46,9 +54,16 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
 
     private static final LatLngBounds BOUNDS_INDIA = new LatLngBounds(new LatLng(-0, 0), new LatLng(0, 0));
 
+    //MapsModel mapsModel = new MapsModel();
+
     private EditText etPlaceAutoCompleteInputfvbi;
     private ImageView ivPlaceAutoCompleteDeletefvbi;
     private RecyclerView rvPlaceAutoCompletefvbi;
+    private ImageView ivPlaceAutoCompleteMarkerfvbi;
+    private CardView cvPlaceAutoCompleteDonefvbi;
+    private TextView tvPlaceAutoCompleteDoneLocNmfvbi;
+    private TextView tvPlaceAutoCompleteDoneLocLatfvbi;
+    private TextView tvPlaceAutoCompleteDoneLocLngfvbi;
 
     private LinearLayoutManager mLinearLayoutManager;
     private PlacesAutoCompleteAdapter PlaceAutoCompleteAdapter;
@@ -60,11 +75,17 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
     private double mylng;
     private LatLng mylatlng;
 
+    private String locationName = "";
+    private double locationLat = 0;
+    private double locationLng = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         buildGoogleApiClient();
         setContentView(R.layout.activity_place_autocomplete);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initMap();
         initComponent();
@@ -72,7 +93,6 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
         initSession();
         initContent();
         initListener();
-
     }
 
     private void initMap() {
@@ -96,6 +116,12 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
         etPlaceAutoCompleteInputfvbi = (EditText) findViewById(R.id.etPlaceAutoCompleteInput);
         ivPlaceAutoCompleteDeletefvbi = (ImageView) findViewById(R.id.ivPlaceAutoCompleteDelete);
         rvPlaceAutoCompletefvbi = (RecyclerView) findViewById(R.id.rvPlaceAutoComplete);
+        ivPlaceAutoCompleteMarkerfvbi = (ImageView) findViewById(R.id.ivPlaceAutoCompleteMarker);
+
+        cvPlaceAutoCompleteDonefvbi = (CardView) findViewById(R.id.cvPlaceAutoCompleteDone);
+        tvPlaceAutoCompleteDoneLocNmfvbi = (TextView) findViewById(R.id.tvPlaceAutoCompleteDoneLocNm);
+        tvPlaceAutoCompleteDoneLocLatfvbi = (TextView) findViewById(R.id.tvPlaceAutoCompleteDoneLocLat);
+        tvPlaceAutoCompleteDoneLocLngfvbi = (TextView) findViewById(R.id.tvPlaceAutoCompleteDoneLocLng);
 
     }
 
@@ -149,9 +175,22 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
 
             }
         });
+        etPlaceAutoCompleteInputfvbi.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                boolean handled = false;
+                if (i == EditorInfo.IME_ACTION_GO) {
+                    SystemUtil.hideKeyBoard(PlacesAutoCompleteActivity.this);
+                }
+                return handled;
+            }
+        });
+
         rvPlaceAutoCompletefvbi.addOnItemTouchListener(new PlacesAutoCompleteRecyclerItemClickListener(this, new PlacesAutoCompleteRecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                SystemUtil.hideKeyBoard(PlacesAutoCompleteActivity.this);
+
                 final PlacesAutoCompleteAdapter.PlaceAutocomplete item = PlaceAutoCompleteAdapter.getItem(position);
                 final String placeId = String.valueOf(item.placeId);
                 Log.i("TAG", "Autocomplete item selected: " + item.description);
@@ -182,6 +221,16 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
                             Log.d("Lihat", "onResult PlacesAutoCompleteActivity : " + places.get(0).getViewport());
 
                             etPlaceAutoCompleteInputfvbi.setText("");
+
+                            locationName = places.get(0).getName().toString() + " , " + places.get(0).getAddress().toString();
+                            locationLat = places.get(0).getLatLng().latitude;
+                            locationLng = places.get(0).getLatLng().longitude;
+
+                            cvPlaceAutoCompleteDonefvbi.setVisibility(View.VISIBLE);
+                            tvPlaceAutoCompleteDoneLocNmfvbi.setText(locationName);
+                            tvPlaceAutoCompleteDoneLocLatfvbi.setText(locationLat+"");
+                            tvPlaceAutoCompleteDoneLocLngfvbi.setText(locationLng+"");
+
                         } else {
                             Toast.makeText(getApplicationContext(), PlacesAutoCompleteConstants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show();
                         }
@@ -268,6 +317,34 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_CANCELED, intent);
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_sub, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuCheckActivity) {
+            Intent intent = new Intent();
+            intent.putExtra(ISeasonConfig.INTENT_PARAM_MAP_NAME, locationName);
+            intent.putExtra(ISeasonConfig.INTENT_PARAM_MAP_LAT, locationLat);
+            intent.putExtra(ISeasonConfig.INTENT_PARAM_MAP_LONG, locationLng);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

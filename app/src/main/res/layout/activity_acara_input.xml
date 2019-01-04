@@ -17,8 +17,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
@@ -32,9 +30,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                app:cardCornerRadius="10dp"
+                android:padding="15dp"
+                app:cardCornerRadius="2dp"
                 app:cardElevation="5dp">
 
                 <EditText
@@ -42,9 +39,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="center"
                     android:hint="JUDUL ACARA"
-                    android:padding="5dp"
+                    android:padding="12dp"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </android.support.v7.widget.CardView>
@@ -52,9 +48,9 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:elevation="5dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginTop="25dp"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,53 +62,21 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Waktu Mulai"
+                        android:layout_marginTop="30dp"
+                        android:text="Mulai"
+                        android:textColor="@color/black"
+                        android:textSize="19dp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:animateLayoutChanges="true"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:animateLayoutChanges="true"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Tanggal"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Jam"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Menit"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@color/colorAccent" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp"
+                        app:cardPreventCornerOverlap="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -120,93 +84,129 @@
                             android:animateLayoutChanges="true"
                             android:orientation="horizontal">
 
-                            <com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker
-                                android:id="@+id/whpAlarmInputTanggal1Mulai"
+                            <LinearLayout
                                 android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <CalendarView
+                                    android:id="@+id/cvAcaraInputDateStart"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:theme="@style/CalenderViewCustom"
+                                    android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
+
+                                <TextView
+                                    android:id="@+id/tvAcaraInputDateStart"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:text="12 DESEMBER 2018"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
                                 android:layout_height="match_parent"
-                                android:visibility="visible"
-                                app:picker_curved="true"
-                                app:picker_selectedTextColor="@color/colorPrimary"
-                                app:picker_selectorColor="@color/colorAccent"
-                                app:picker_textColor="@color/colorAccent"
-                                app:picker_todayText="Hari Ini" />
+                                android:background="@android:color/white" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:animateLayoutChanges="true"
+                                    android:orientation="horizontal">
+
+                                    <com.github.florent37.singledateandtimepicker.widget.WheelHourPicker
+                                        android:id="@+id/whpAlarmInputJamStart"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"
+                                        app:wheel_atmospheric="true"
+                                        app:wheel_curved="true"
+                                        app:wheel_indicator_size="5dp"
+                                        app:wheel_item_text_color="@color/white"
+                                        app:wheel_same_width="true"
+                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_visible_item_count="10" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text=":"
+                                        android:textColor="@color/white"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
+
+                                    <com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker
+                                        android:id="@+id/whpAlarmInputMenitStart"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"
+                                        app:wheel_atmospheric="true"
+                                        app:wheel_curved="true"
+                                        app:wheel_indicator_size="5dp"
+                                        app:wheel_item_text_color="@color/white"
+                                        app:wheel_same_width="true"
+                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_visible_item_count="10" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tvAcaraInputTimeStart"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:text="14 : 48"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold"
+                                    android:visibility="visible" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorAccent" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:animateLayoutChanges="true"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    </android.support.v7.widget.CardView>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Waktu Selesai"
+                        android:layout_marginTop="30dp"
+                        android:text="Selesai"
+                        android:textColor="@color/black"
+                        android:textSize="19dp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:animateLayoutChanges="true"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="5dp"
-                            android:animateLayoutChanges="true"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Tanggal"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Jam"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="Menit"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@color/colorAccent" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="10dp"
+                        app:cardPreventCornerOverlap="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -214,25 +214,156 @@
                             android:animateLayoutChanges="true"
                             android:orientation="horizontal">
 
-                            <com.github.florent37.singledateandtimepicker.SingleDateAndTimePicker
-                                android:id="@+id/whpAlarmInputTanggal1Selesai"
+                            <LinearLayout
                                 android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <CalendarView
+                                    android:id="@+id/cvAcaraInputDateEnd"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:theme="@style/CalenderViewCustom"
+                                    android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
+
+                                <TextView
+                                    android:id="@+id/tvAcaraInputDateEnd"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:text="12 DESEMBER 2018"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
                                 android:layout_height="match_parent"
-                                android:visibility="visible"
-                                app:picker_curved="true"
-                                app:picker_selectedTextColor="@color/colorPrimary"
-                                app:picker_selectorColor="@color/colorAccent"
-                                app:picker_textColor="@color/colorAccent"
-                                app:picker_todayText="Hari Ini" />
+                                android:background="@android:color/white" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:animateLayoutChanges="true"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:animateLayoutChanges="true"
+                                    android:orientation="horizontal">
+
+                                    <com.github.florent37.singledateandtimepicker.widget.WheelHourPicker
+                                        android:id="@+id/whpAlarmInputJamEnd"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"
+                                        app:wheel_atmospheric="true"
+                                        app:wheel_curved="true"
+                                        app:wheel_indicator_size="5dp"
+                                        app:wheel_item_text_color="@color/white"
+                                        app:wheel_same_width="true"
+                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_visible_item_count="10" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:text=":"
+                                        android:textColor="@color/white"
+                                        android:textSize="20dp"
+                                        android:textStyle="bold" />
+
+                                    <com.github.florent37.singledateandtimepicker.widget.WheelMinutePicker
+                                        android:id="@+id/whpAlarmInputMenitEnd"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"
+                                        app:wheel_atmospheric="true"
+                                        app:wheel_curved="true"
+                                        app:wheel_indicator_size="5dp"
+                                        app:wheel_item_text_color="@color/white"
+                                        app:wheel_same_width="true"
+                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_visible_item_count="10" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tvAcaraInputTimeEnd"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:background="@color/white"
+                                    android:gravity="center"
+                                    android:text="14 : 48"
+                                    android:textColor="@color/colorAccent"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorAccent" />
+                    </android.support.v7.widget.CardView>
 
-                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:gravity="end"
+                        android:text="Pertemuan diatur 24 Jam"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="19dp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        app:cardBackgroundColor="@color/Pink"
+                        app:cardCornerRadius="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
+                            android:orientation="vertical"
+                            android:paddingLeft="25dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp">
+
+                            <LinearLayout
+                                android:id="@+id/llAlarmInputAddfriend"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="30dp"
+                                android:animateLayoutChanges="true"
+                                android:orientation="horizontal">
+
+                                <Spinner
+                                    android:id="@+id/spAcaraInputMenitPengingat"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:backgroundTint="@color/white" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
 
                 </LinearLayout>
 
@@ -241,8 +372,124 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Lainnya"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        app:cardBackgroundColor="@color/Pink"
+                        app:cardCornerRadius="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
+                            android:orientation="vertical"
+                            android:paddingLeft="25dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp">
+
+                            <LinearLayout
+                                android:id="@+id/llAcaraInputLokasi"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="30dp"
+                                android:animateLayoutChanges="true"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:text="Lokasi"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvAcaraInputLokasiNmJln"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:ellipsize="end"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:text="Jl. T.B Simatupang…"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="15dp"
+                                android:background="@color/white" />
+
+                            <LinearLayout
+                                android:id="@+id/llAcaraInputTeman"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="30dp"
+                                android:animateLayoutChanges="true"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="2"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:text="Friends"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvAcaraInputTemanNama"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:ellipsize="end"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:text="Isabella, Alfonso…"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                app:cardCornerRadius="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -251,139 +498,165 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <LinearLayout
-                        android:id="@+id/llAcaraInputLokasi"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:animateLayoutChanges="true"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_location_black" />
-
-                        <TextView
-                            android:id="@+id/tvAcaraInputLokasi"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:gravity="center_vertical"
-                            android:text="Lokasi" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llAcaraInputTeman"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:animateLayoutChanges="true"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_person_black" />
-
-                        <TextView
-                            android:id="@+id/tvAcaraInputTeman"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:gravity="center_vertical"
-                            android:text="Undang Teman" />
-                    </LinearLayout>
-
-                    <Spinner
-                        android:id="@+id/spAcaraInputMenitPengingat"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp" />
+                        android:text="Mode Pengingat"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
 
-                    <LinearLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:animateLayoutChanges="true"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        app:cardBackgroundColor="@color/Pink"
+                        app:cardCornerRadius="10dp">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <ImageButton
-                            android:id="@+id/ibAcaraInputFakeCall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_call_black" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <ImageButton
-                            android:id="@+id/ibAcaraInputPopUp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_circle_black" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <ImageButton
-                            android:id="@+id/ibAcaraInputRingtone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_music_black" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llAcaraInputEvaluasi"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:animateLayoutChanges="true"
-                        android:orientation="horizontal">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Pengingat untuk evaluasi" />
+                            android:animateLayoutChanges="true"
+                            android:orientation="vertical"
+                            android:paddingLeft="25dp"
+                            android:paddingTop="15dp"
+                            android:paddingBottom="15dp">
 
-                        <CheckBox
-                            android:id="@+id/cbAcaraInputEvaluasi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:text="" />
-                    </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/llAcaraInputNotifikasiPopup"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="30dp"
+                                android:animateLayoutChanges="true"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:text="Notifikasi Pop-up"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/ivAcaraInputNotifikasiPopup"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_check_circle_white"
+                                    android:tint="@color/white"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="15dp"
+                                android:background="@color/white" />
+
+                            <LinearLayout
+                                android:id="@+id/llAcaraInputGoogleVoice"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="30dp"
+                                android:animateLayoutChanges="true"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:text="Voice Auto Play"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/ivAcaraInputGoogleVoice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_check_circle_white"
+                                    android:tint="@color/white"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="15dp"
+                                android:background="@color/white" />
+
+                            <LinearLayout
+                                android:id="@+id/llAcaraInputRingtone"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginRight="30dp"
+                                android:animateLayoutChanges="true"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:text="Music Gallery"
+                                    android:textColor="@color/white"
+                                    android:textSize="20dp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/ivAcaraInputRingtone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_check_circle_white"
+                                    android:tint="@color/white"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <Button
-                android:id="@+id/bAcaraInputBuat"
+            <LinearLayout
+                android:id="@+id/llAcaraInputEvaluasi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/background_radius"
-                android:backgroundTint="@color/colorAccent"
-                android:text="Buat Sekarang"
-                android:textColor="@color/white" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:animateLayoutChanges="true"
+                android:background="#4E4E4E"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Ingatkan Untuk Evaluasi"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/cbAcaraInputEvaluasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/Pink"
+                    android:checked="false"
+                    android:text="" />
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

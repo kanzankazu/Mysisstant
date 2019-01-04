@@ -24,4 +24,7 @@ public interface ISeasonConfig {
     String SUCCESS = "success";
 
     int ID_NOTIF = 0;
+    String INTENT_PARAM_MAP_NAME = "MAPS1";
+    String INTENT_PARAM_MAP_LAT = "MAPS2";
+    String INTENT_PARAM_MAP_LONG = "MAPS3";
 }

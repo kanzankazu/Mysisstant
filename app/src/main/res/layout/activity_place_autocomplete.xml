@@ -7,12 +7,25 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/mapPlaceAutoComplete"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.kanzankazu.pedagang.activity.MainMapsActivity" />
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/mapPlaceAutoComplete"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/ivPlaceAutoCompleteMarker"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/mapsmarker"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cvPlaceAutoCompleteSearch"
@@ -45,6 +58,7 @@
                 android:drawableLeft="@drawable/ic_search"
                 android:drawablePadding="9dp"
                 android:hint="@string/autocomplete_hint"
+                android:imeOptions="actionGo"
                 android:paddingLeft="8dp"
                 android:paddingRight="9dp"
                 android:singleLine="true"
@@ -57,7 +71,7 @@
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:src="@drawable/ic_delete"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -65,9 +79,75 @@
         android:id="@+id/rvPlaceAutoComplete"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/cvPlaceAutoCompleteDone"
         android:layout_below="@+id/cvPlaceAutoCompleteSearch"
         android:layout_margin="5dp"
         android:scrollbars="vertical"
+        android:visibility="gone"
         tools:listitem="@layout/list_places_autocomplete" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvPlaceAutoCompleteDone"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tvPlaceAutoCompleteDoneLocNm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="Location Name" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:animateLayoutChanges="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPlaceAutoCompleteDoneLocLat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="Location Latitude" />
+
+                <TextView
+                    android:id="@+id/tvPlaceAutoCompleteDoneLocLng"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="Location Lognitude" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

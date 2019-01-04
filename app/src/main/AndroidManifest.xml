@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="id.co.halloarif.catatanku">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -112,8 +113,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.Support.PlacesAutoCompleteActivity"
-            android:label="map"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="map" />
+        <activity android:name=".view.activity.Support.MemberPickerActivity" />
     </application>
 
 </manifest>

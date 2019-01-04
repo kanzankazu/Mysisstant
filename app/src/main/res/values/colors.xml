@@ -6,6 +6,7 @@
 
     <color name="SuperWhite">#FFFFFF</color>
     <color name="Pink">#FFBCE0</color>
+    <color name="PinkTarnsparent">#88ffbce0</color>
 
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>

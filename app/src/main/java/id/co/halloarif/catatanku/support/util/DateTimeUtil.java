@@ -141,9 +141,16 @@ public class DateTimeUtil {
     }
 
     public static String dateToString(Date date, SimpleDateFormat dateFormat) {
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        //Date date = new Date();
         return dateFormat.format(date);
+    }
+
+    public static String calendarToString(Calendar cal, SimpleDateFormat dateFormat) {
+        dateFormat.setTimeZone(cal.getTimeZone());
+        return dateFormat.format(calendarToDate(cal));
+    }
+
+    public static Date calendarToDate(Calendar cal) {
+        return cal.getTime();
     }
 
     /**

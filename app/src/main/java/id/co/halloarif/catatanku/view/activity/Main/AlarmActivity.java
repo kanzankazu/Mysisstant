@@ -44,6 +44,8 @@ import id.co.halloarif.catatanku.model.AlarmModel;
 import id.co.halloarif.catatanku.model.ContactPickerModel;
 import id.co.halloarif.catatanku.service.AlarmReceiver;
 import id.co.halloarif.catatanku.support.util.DateTimeUtil;
+import id.co.halloarif.catatanku.support.util.ListArrayUtil;
+import id.co.halloarif.catatanku.support.util.SystemUtil;
 import id.co.halloarif.catatanku.support.util.VideoAudioUtil;
 import id.co.halloarif.catatanku.view.activity.Support.ListContactPickerCheckBox;
 
@@ -388,21 +390,30 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private String getTagFromCB(CheckBox... checkBoxes) {
-        StringBuilder builder = new StringBuilder();
+        List<String> strings = new ArrayList<>();
         for (int i = 0; i < checkBoxes.length; i++) {
             CheckBox cb = checkBoxes[i];
             String tag = (String) cb.getTag();
-
             if (cb.isChecked()) {
-                if (i == (checkBoxes.length - 1)) {
-                    builder.append(tag);
-                } else {
-                    builder.append(tag + ",");
-                }
+                strings.add(tag);
             }
         }
 
-        return builder.toString();
+        return ListArrayUtil.convertListStringToString(strings);
+    }
+
+    private List<String> getListTagFromCB(CheckBox... checkBoxes) {
+        StringBuilder builder = new StringBuilder();
+        List<String> strings = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            CheckBox checkBox = checkBoxes[i];
+            if (checkBox.isChecked()) {
+                String trim = checkBox.getTag().toString().trim();
+                strings.add(trim);
+            }
+        }
+
+        return strings;
     }
 
     private void playMediaPlayer() {
@@ -471,7 +482,7 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void setAlarm() {
-        AlarmModel model = new AlarmModel();
+
         StringBuilder alarmSubId = new StringBuilder();
 
         String alarmId = UUID.randomUUID().toString();
@@ -493,9 +504,8 @@ public class AlarmActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -1);
         long yesterday = calendar.getTimeInMillis();
-        int timeMillis = (int) (yesterday - System.currentTimeMillis());
 
-        String alarmTagDayFromCB = getTagFromCB(
+        List<String> stringsTag = getListTagFromCB(
                 cbAlarmInputHariSeninfvbi,
                 cbAlarmInputHariSelasafvbi,
                 cbAlarmInputHariRabufvbi,
@@ -505,29 +515,35 @@ public class AlarmActivity extends AppCompatActivity {
                 cbAlarmInputHariMinggufvbi
         );
 
-        List<Integer> intFromCB = getIntFromCB(
-                cbAlarmInputHariSeninfvbi,
-                cbAlarmInputHariSelasafvbi,
-                cbAlarmInputHariRabufvbi,
-                cbAlarmInputHariKamisfvbi,
-                cbAlarmInputHariJumatfvbi,
-                cbAlarmInputHariSabtufvbi,
-                cbAlarmInputHariMinggufvbi
-        );
+        String alarmTagDayFromCB;
+        if (stringsTag.size() > 0) {
+            alarmTagDayFromCB = getTagFromCB(
+                    cbAlarmInputHariSeninfvbi,
+                    cbAlarmInputHariSelasafvbi,
+                    cbAlarmInputHariRabufvbi,
+                    cbAlarmInputHariKamisfvbi,
+                    cbAlarmInputHariJumatfvbi,
+                    cbAlarmInputHariSabtufvbi,
+                    cbAlarmInputHariMinggufvbi
+            );
+        } else {
+            alarmTagDayFromCB = "";
+        }
 
-        if (intFromCB.size() == 0) {
-            int reqCode = timeMillis;
-            alarmSubId.append(reqCode);
+        if (stringsTag.size() == 0) {
+            int reqCode = SystemUtil.getID();
             //PendingIntent pendingIntent = DateTimeAlarmUtil.setPendingIntentMakeAlarm(AlarmActivity.this, intent, reqCode);
             //DateTimeAlarmUtil.setAlarm(AlarmActivity.this, pendingIntent, currentHour, currentMinute);
+
+            alarmSubId.append(reqCode);
         } else {
-            for (int i = 0; i < intFromCB.size(); i++) {
-                Integer q = intFromCB.get(i);
-                int reqCode = timeMillis + i;
+            for (int i = 0; i < stringsTag.size(); i++) {
+                Log.d("Lihat", "setAlarm AlarmActivity : " + i);
+                int reqCode = SystemUtil.getID();
                 //PendingIntent pendingIntent = DateTimeAlarmUtil.setPendingIntentMakeAlarm(AlarmActivity.this, intent, reqCode);
                 //DateTimeAlarmUtil.setAlarmRepeatDay(AlarmActivity.this, pendingIntent, currentHour, currentMinute, q.intValue());
 
-                if (i == (intFromCB.size() - 1)) {
+                if (i == (stringsTag.size() - 1)) {
                     alarmSubId.append(reqCode);
                 } else {
                     alarmSubId.append(reqCode + ",");
@@ -550,17 +566,19 @@ public class AlarmActivity extends AppCompatActivity {
 
         LoginActivity.moveTo(AlarmActivity.this, AlarmSummaryActivity.class, true);*/
 
-        Log.d("Lihat", "setAlarm AlarmActivity : " + alarmId);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + alarmSubId.toString());
-        Log.d("Lihat", "setAlarm AlarmActivity : " + alarmTitle);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + currentHourString);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + currentMinuteString);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + alarmTagDayFromCB);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + alarmContactName);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + alarmContactNo);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + recordPath);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + ringtoneTitle);
-        Log.d("Lihat", "setAlarm AlarmActivity : " + ringtonePath);
+        Toast.makeText(getApplicationContext(), "Set and Save Alarm Success", Toast.LENGTH_SHORT).show();
+
+        Log.d("Lihat", "setAlarm AlarmActivity alarmId : " + alarmId);
+        Log.d("Lihat", "setAlarm AlarmActivity alarmSubId : " + alarmSubId.toString());
+        Log.d("Lihat", "setAlarm AlarmActivity alarmTitle : " + alarmTitle);
+        Log.d("Lihat", "setAlarm AlarmActivity currentHourString : " + currentHourString);
+        Log.d("Lihat", "setAlarm AlarmActivity currentMinuteString : " + currentMinuteString);
+        Log.d("Lihat", "setAlarm AlarmActivity alarmTagDayFromCB : " + alarmTagDayFromCB);
+        Log.d("Lihat", "setAlarm AlarmActivity alarmContactName : " + alarmContactName);
+        Log.d("Lihat", "setAlarm AlarmActivity alarmContactNo : " + alarmContactNo);
+        Log.d("Lihat", "setAlarm AlarmActivity recordPath : " + recordPath);
+        Log.d("Lihat", "setAlarm AlarmActivity ringtoneTitle : " + ringtoneTitle);
+        Log.d("Lihat", "setAlarm AlarmActivity ringtonePath : " + ringtonePath);
     }
 
     private void dialogQuit() {
@@ -655,18 +673,6 @@ public class AlarmActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*@Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        allPixels = savedInstanceState.getFloat(BUNDLE_LIST_PIXELS);
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putFloat(BUNDLE_LIST_PIXELS, allPixels);
-    }*/
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -683,4 +689,16 @@ public class AlarmActivity extends AppCompatActivity {
         super.onDestroy();
         stopDeleteRecord();
     }
+
+    /*@Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        allPixels = savedInstanceState.getFloat(BUNDLE_LIST_PIXELS);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putFloat(BUNDLE_LIST_PIXELS, allPixels);
+    }*/
 }

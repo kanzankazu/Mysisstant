@@ -4,20 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import id.co.halloarif.catatanku.App;
 
@@ -146,5 +150,38 @@ public class SystemUtil {
         } else {
             textView.setTextColor(ContextCompat.getColor(App.getContext(), androidRed));
         }
+    }
+
+    private final static AtomicInteger c = new AtomicInteger(0);
+
+    public static int getID() {
+        if (c.get() == 9999) {
+            resetID();
+            return c.incrementAndGet();
+        } else {
+            return c.incrementAndGet();
+        }
+    }
+
+    public static void resetID() {
+        c.set(0);
+    }
+
+    public static void setID(int id) {
+        c.set(id);
+    }
+
+    public static void showToast(Context context, String text, int length, @Nullable int gravity) {
+        Toast toast = Toast.makeText(context, text, length);
+        if (gravity == Gravity.TOP) {
+            toast.setGravity(Gravity.TOP, 0, 20);
+        } else if (gravity == Gravity.BOTTOM) {
+            toast.setGravity(Gravity.BOTTOM, 0, 20);
+        } else if (gravity == Gravity.LEFT) {
+            toast.setGravity(Gravity.LEFT, 0, 20);
+        } else if (gravity == Gravity.RIGHT) {
+            toast.setGravity(Gravity.RIGHT, 0, 20);
+        }
+        toast.show();
     }
 }
