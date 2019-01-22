@@ -152,6 +152,14 @@ public class SystemUtil {
         }
     }
 
+    public static void changeColBackground(int androidRed, View textView) {
+        if (DeviceDetailUtil.isKitkatBelow()) {
+            textView.setBackgroundColor(App.getContext().getResources().getColor(androidRed));
+        } else {
+            textView.setBackgroundColor(ContextCompat.getColor(App.getContext(), androidRed));
+        }
+    }
+
     private final static AtomicInteger c = new AtomicInteger(0);
 
     public static int getID() {
@@ -183,5 +191,18 @@ public class SystemUtil {
             toast.setGravity(Gravity.RIGHT, 0, 20);
         }
         toast.show();
+    }
+
+    public static String getLastString(String input, int lastChar) {
+        //String input = "123456789";     //input string
+        String lastDigits = "";     //substring containing last 4 characters
+
+        if (input.length() > lastChar) {
+            lastDigits = input.substring(input.length() - lastChar);
+        } else {
+            lastDigits = input;
+        }
+
+        return lastDigits;
     }
 }

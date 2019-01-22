@@ -19,6 +19,8 @@ public interface ISeasonConfig {
     String INTENT_PARAM2 = "SAIUL1313";
     String INTENT_PARAM_BACK = "SIAUL2121";
     String INTENT_PARAM_BACK2 = "SAIUL3131";
+    String INTENT_ID = "ID";
+    String INTENT_ACTIVE = "ACTIVE";
 
     String OK = "ok";
     String SUCCESS = "success";

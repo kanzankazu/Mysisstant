@@ -6,16 +6,19 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import id.co.halloarif.catatanku.R;
@@ -29,6 +32,12 @@ public class NotifUtil {
 
     public static void setNotification(Context context, @Nullable String title, @Nullable String text, int smallIcon, Bitmap bigIcon, boolean isCancelAble, PendingIntent pendingIntent, int NOTIFICATION_ID, @Nullable String ringtone) {
 
+        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean vibrate = getPrefs.getBoolean("vibrate", true);
+
+        String alarms = getPrefs.getString("alarmsound", "");
+        Log.e("Lihat", "setNotification NotifUtil : " + alarms);
+
         /*Uri uri;
         if (!TextUtils.isEmpty(ringtone)) {
             uri = ;
@@ -36,6 +45,7 @@ public class NotifUtil {
             uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }*/
 
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setContentTitle(title)
                 .setContentText(text)
@@ -47,10 +57,10 @@ public class NotifUtil {
                 .setWhen(System.currentTimeMillis())
                 .setOngoing(isCancelAble)
                 .setTicker(title)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setSound(!TextUtils.isEmpty(ringtone) ? Uri.parse(ringtone) : RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setSound(!TextUtils.isEmpty(ringtone) ? Uri.parse(ringtone) : RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
@@ -138,7 +148,7 @@ public class NotifUtil {
         return false;
     }
 
-    private static boolean isNotificationShow2(Context context, int NOTIFICATION_ID) {
+    public static boolean isNotificationShow2(Context context, int NOTIFICATION_ID) {
         Intent notificationIntent = new Intent(context, context.getClass());
         PendingIntent test = PendingIntent.getActivity(context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_NO_CREATE);
         return test != null;

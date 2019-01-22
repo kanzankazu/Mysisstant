@@ -78,6 +78,7 @@
                                 android:layout_weight="1"
                                 app:wheel_atmospheric="true"
                                 app:wheel_curved="true"
+                                app:wheel_cyclic="true"
                                 app:wheel_item_text_size="35dp"
                                 app:wheel_selected_item_text_color="@color/black"
                                 app:wheel_visible_item_count="5" />
@@ -98,6 +99,7 @@
                                 android:layout_weight="1"
                                 app:wheel_atmospheric="true"
                                 app:wheel_curved="true"
+                                app:wheel_cyclic="true"
                                 app:wheel_item_text_size="35dp"
                                 app:wheel_selected_item_text_color="@color/black"
                                 app:wheel_visible_item_count="5" />
@@ -135,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        app:cardBackgroundColor="@color/Pink"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
@@ -150,7 +152,7 @@
                             <LinearLayout
                                 android:id="@+id/llAlarmInputAddfriend"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
                                 android:orientation="horizontal">
@@ -171,7 +173,7 @@
                                 <ImageView
                                     android:id="@+id/ivAlarmInputAddFriend"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="gone" />
@@ -186,7 +188,7 @@
                             <LinearLayout
                                 android:id="@+id/llAlarmInputVoice"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
@@ -208,7 +210,7 @@
                                 <ImageView
                                     android:id="@+id/ivAlarmInputVoice"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="gone" />
@@ -233,7 +235,7 @@
                             <LinearLayout
                                 android:id="@+id/llAlarmInputRingtone"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
@@ -255,7 +257,7 @@
                                 <ImageView
                                     android:id="@+id/ivAlarmInputRingtone"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="gone" />
@@ -293,7 +295,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        app:cardBackgroundColor="@color/Pink"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
@@ -308,7 +310,7 @@
                             <LinearLayout
                                 android:id="@+id/llAlarmInputOnceAlarm"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
                                 android:orientation="horizontal">
@@ -329,7 +331,7 @@
                                 <ImageView
                                     android:id="@+id/ivAlarmInputOnceAlarm"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="visible" />

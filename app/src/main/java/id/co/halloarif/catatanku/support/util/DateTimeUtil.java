@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class DateTimeUtil {
     public static final int SECOND_MILLIS = 1000;
@@ -151,6 +152,23 @@ public class DateTimeUtil {
 
     public static Date calendarToDate(Calendar cal) {
         return cal.getTime();
+    }
+
+    public static long dateToLong(Date dates) {
+        //String date = "22/3/2014";
+        String date = dateToString(dates, new SimpleDateFormat("dd/MM/yyyy"));
+        String parts[] = date.split("/");
+
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+        return calendar.getTimeInMillis();
     }
 
     /**
@@ -587,5 +605,93 @@ public class DateTimeUtil {
         Calendar future = Calendar.getInstance();
         future.add(Calendar.DAY_OF_YEAR, days);
         return (isBeforeDay(cal, today) && !isBeforeDay(cal, future));
+    }
+
+    /**
+     * @param dateString yyyy-MM-dd
+     * @return
+     * @throws ParseException
+     */
+    public static String getTimeSecMinutesHoursDays(String dateString) throws ParseException {
+
+        SimpleDateFormat endDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateAndTime = endDateFormat.format(new Date());
+        Date endDate = endDateFormat.parse(currentDateAndTime);
+
+        SimpleDateFormat startDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = startDateFormat.parse(dateString);
+        // format the java.util.Date object to the desired format
+        //  String startDateString = new SimpleDateFormat(Constants.DateAndMonth.SAMPLE_DATE_TIME_FORMAT).format(startDate);
+        //long startMili = Tools.getMiliSecondsFromDateANDTIME(startDateString);
+        //long endMili = Tools.getMiliSecondsFromDateANDTIME(currentDateAndTime);
+        long difference = endDate.getTime() - startDate.getTime();
+
+        //String[] separated = minutesHoursDays.split(":");
+        //long seconds = TimeUnit.MILLISECONDS.toSeconds(difference);
+
+        String minutesHoursDays = calculateTime(difference); //minutes:Hours:days
+
+        return minutesHoursDays;
+
+    }
+
+    private static String calculateTime(long milis) {
+        String time = "";
+        int day = (int) (milis / (1000 * 60 * 60 * 24));
+        int hours = (int) ((milis - (1000 * 60 * 60 * 24 * day)) / (1000 * 60 * 60));
+        int minute = (int) (milis - (1000 * 60 * 60 * 24 * day) - (1000 * 60 * 60 * hours)) / (1000 * 60);
+        int second = (int) ((milis / 1000) % 60);
+
+        if (day > 0) {
+            if (day == 1) {
+                time = day + " day";
+            } else {
+                time = day + " days";
+            }
+        } else if (day < 1 && hours > 0) {
+
+            if (hours == 1) {
+                time = hours + " hr";
+            } else {
+                time = hours + " hrs";
+            }
+        } else if (hours < 1 && minute > 0) {
+            if (minute == 1) {
+                time = minute + " min";
+            } else {
+                time = minute + " mins";
+            }
+        } else if (minute < 1 && second > 0) {
+
+            if (second == 1) {
+                time = second + " sec";
+            } else {
+                time = second + " secs";
+            }
+        } else {
+
+            if (second <= 0) {
+                time = "0 sec";
+            }
+        }
+
+        try {
+            int timeUnitDay = (int) TimeUnit.MILLISECONDS.toDays(milis);
+            long timeUnitHours = TimeUnit.MILLISECONDS.toHours(milis);
+            long timeUnitMinutes = TimeUnit.MILLISECONDS.toMinutes(milis);
+            long timeUnitSeconds = TimeUnit.MILLISECONDS.toSeconds(milis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //  System.out.println("Day " + day + " Hour " + hours + " Minute " + minute + " Seconds " + second);
+        //time = "Day " + timeUnitDay + " : Hour " + timeUnitHours + " : Minute " + timeUnitMinutes + " : Seconds " + timeUnitSeconds;
+        time = "Day " + day + " : Hour " + hours + " : Minute " + minute + " : Seconds " + second;
+        return time;
+    }
+
+    public static int getDayNow() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DAY_OF_WEEK);
     }
 }

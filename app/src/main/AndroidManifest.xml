@@ -33,11 +33,15 @@
             android:value="@string/google_maps_key" />
 
         <service
-            android:name=".service.PopupService"
+            android:name=".service.AlarmService"
             android:enabled="true"
             android:exported="true" />
         <service
             android:name=".service.SpeakService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.RunAfterBootService"
             android:enabled="true"
             android:exported="true" />
 
@@ -49,6 +53,14 @@
             android:name=".service.Alarm"
             android:enabled="true"
             android:exported="true" />
+        <receiver
+            android:name=".service.BootDeviceReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".view.activity.LogReg.LoginActivity"
@@ -114,7 +126,12 @@
         <activity
             android:name=".view.activity.Support.PlacesAutoCompleteActivity"
             android:label="map" />
-        <activity android:name=".view.activity.Support.MemberPickerActivity" />
+        <activity
+            android:name=".view.activity.Support.MemberPickerActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".view.activity.Main.AlarmActivityShow"
+            android:theme="@style/AppTheme.FullScreen" />
     </application>
 
 </manifest>

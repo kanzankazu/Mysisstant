@@ -31,8 +31,9 @@
                 <ImageView
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="match_parent"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_alarm_black" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_email"
+                    android:tint="@color/gray_light" />
 
                 <EditText
                     android:id="@+id/etLogRegName"
@@ -60,8 +61,9 @@
                 <ImageView
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="match_parent"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_alarm_black" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_lock"
+                    android:tint="@color/gray_light" />
 
                 <EditText
                     android:id="@+id/etLogRegPassword2"
@@ -77,8 +79,9 @@
                     android:id="@+id/ibLogRegPassword2"
                     android:layout_width="?attr/actionBarSize"
                     android:layout_height="match_parent"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_alarm_black"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_visibility_off"
+                    android:tint="@color/black"
                     android:visibility="visible" />
             </LinearLayout>
 
@@ -161,8 +164,9 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_alarm_black" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_google_circle" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -181,8 +185,9 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_alarm_black" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_facebook_circle" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -201,8 +206,9 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_alarm_black" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_twitter_circle" />
 
             <TextView
                 android:layout_width="match_parent"

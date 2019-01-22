@@ -2,9 +2,11 @@ package id.co.halloarif.catatanku.view.activity.LogReg;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private LinearLayout llLogRegGmailfvbi;
     private LinearLayout llLogRegFacebookfvbi;
     private LinearLayout llLogRegTwitterfvbi;
+    private boolean passwordShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initListener() {
+        ibLogRegPassword2fvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (passwordShown) {//tidak terlihat
+                    passwordShown = false;
+                    etLogRegPassword2fvbi.setInputType(129);//edittest
+                    etLogRegPassword2fvbi.setTypeface(Typeface.SANS_SERIF);
+                    ibLogRegPassword2fvbi.setImageResource(R.drawable.ic_visibility_off);
+                } else {//terlihat
+                    passwordShown = true;
+                    etLogRegPassword2fvbi.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    ibLogRegPassword2fvbi.setImageResource(R.drawable.ic_visibility);
+                }
+            }
+        });
         bLogRegExecutefvbi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static Intent moveTo(Activity activity, Class<?> targetClass, boolean isFinish) {
+
         Intent intent = new Intent(activity, targetClass);
         activity.startActivity(intent);
 

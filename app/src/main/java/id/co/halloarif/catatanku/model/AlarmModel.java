@@ -14,6 +14,8 @@ public class AlarmModel {
     private String alarm_ringtone;
     private String alarm_ringtone_uri;
     private int alarm_is_Active;
+    private int alarm_no;
+    private String alarm_text_day;
 
     public String getAlarm_id() {
         return alarm_id;
@@ -53,6 +55,14 @@ public class AlarmModel {
 
     public void setAlarm_day(String alarm_day) {
         this.alarm_day = alarm_day;
+    }
+
+    public String getAlarm_text_day() {
+        return alarm_text_day;
+    }
+
+    public void setAlarm_text_day(String alarm_text_day) {
+        this.alarm_text_day = alarm_text_day;
     }
 
     public String getAlarm_friend() {
@@ -117,5 +127,13 @@ public class AlarmModel {
 
     public void setAlarm_is_Active(int alarm_is_active) {
         this.alarm_is_Active = alarm_is_active;
+    }
+
+    public void setAlarm_no(int alarm_no) {
+        this.alarm_no = alarm_no;
+    }
+
+    public int getAlarm_no() {
+        return alarm_no;
     }
 }

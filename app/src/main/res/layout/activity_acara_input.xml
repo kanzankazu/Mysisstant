@@ -143,7 +143,7 @@
                                         app:wheel_indicator_size="5dp"
                                         app:wheel_item_text_color="@color/white"
                                         app:wheel_same_width="true"
-                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_selected_item_text_color="@color/pink"
                                         app:wheel_visible_item_count="10" />
 
                                     <TextView
@@ -167,7 +167,7 @@
                                         app:wheel_indicator_size="5dp"
                                         app:wheel_item_text_color="@color/white"
                                         app:wheel_same_width="true"
-                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_selected_item_text_color="@color/pink"
                                         app:wheel_visible_item_count="10" />
 
                                 </LinearLayout>
@@ -273,7 +273,7 @@
                                         app:wheel_indicator_size="5dp"
                                         app:wheel_item_text_color="@color/white"
                                         app:wheel_same_width="true"
-                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_selected_item_text_color="@color/pink"
                                         app:wheel_visible_item_count="10" />
 
                                     <TextView
@@ -297,7 +297,7 @@
                                         app:wheel_indicator_size="5dp"
                                         app:wheel_item_text_color="@color/white"
                                         app:wheel_same_width="true"
-                                        app:wheel_selected_item_text_color="@color/Pink"
+                                        app:wheel_selected_item_text_color="@color/pink"
                                         app:wheel_visible_item_count="10" />
 
                                 </LinearLayout>
@@ -333,7 +333,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        app:cardBackgroundColor="@color/Pink"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
@@ -394,7 +394,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        app:cardBackgroundColor="@color/Pink"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
@@ -510,7 +510,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        app:cardBackgroundColor="@color/Pink"
+                        app:cardBackgroundColor="@color/pink"
                         app:cardCornerRadius="10dp">
 
                         <LinearLayout
@@ -525,7 +525,7 @@
                             <LinearLayout
                                 android:id="@+id/llAcaraInputNotifikasiPopup"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
                                 android:orientation="horizontal">
@@ -544,7 +544,7 @@
                                 <ImageView
                                     android:id="@+id/ivAcaraInputNotifikasiPopup"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="gone" />
@@ -560,7 +560,7 @@
                             <LinearLayout
                                 android:id="@+id/llAcaraInputGoogleVoice"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
@@ -580,7 +580,7 @@
                                 <ImageView
                                     android:id="@+id/ivAcaraInputGoogleVoice"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="gone" />
@@ -596,7 +596,7 @@
                             <LinearLayout
                                 android:id="@+id/llAcaraInputRingtone"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="30dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginRight="30dp"
                                 android:animateLayoutChanges="true"
@@ -616,7 +616,7 @@
                                 <ImageView
                                     android:id="@+id/ivAcaraInputRingtone"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:src="@drawable/ic_check_circle_white"
                                     android:tint="@color/white"
                                     android:visibility="gone" />
@@ -653,7 +653,7 @@
                     android:id="@+id/cbAcaraInputEvaluasi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/Pink"
+                    android:buttonTint="@color/pink"
                     android:checked="false"
                     android:text="" />
             </LinearLayout>

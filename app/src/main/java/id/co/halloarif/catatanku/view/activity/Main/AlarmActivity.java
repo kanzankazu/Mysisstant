@@ -11,6 +11,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -33,19 +34,19 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
+import id.co.halloarif.catatanku.ISeasonConfig;
 import id.co.halloarif.catatanku.R;
 import id.co.halloarif.catatanku.database.SQLiteHelper;
 import id.co.halloarif.catatanku.model.AlarmModel;
 import id.co.halloarif.catatanku.model.ContactPickerModel;
-import id.co.halloarif.catatanku.service.AlarmReceiver;
+import id.co.halloarif.catatanku.support.util.DateTimeAlarmUtil;
 import id.co.halloarif.catatanku.support.util.DateTimeUtil;
+import id.co.halloarif.catatanku.support.util.InputValidUtil;
 import id.co.halloarif.catatanku.support.util.ListArrayUtil;
-import id.co.halloarif.catatanku.support.util.SystemUtil;
 import id.co.halloarif.catatanku.support.util.VideoAudioUtil;
 import id.co.halloarif.catatanku.view.activity.Support.ListContactPickerCheckBox;
 
@@ -55,6 +56,10 @@ public class AlarmActivity extends AppCompatActivity {
 
     SQLiteHelper db = new SQLiteHelper(AlarmActivity.this);
     MediaRecorder recorder = new MediaRecorder();
+
+    StringBuilder alarmSubIdStringBuilder = new StringBuilder();
+    private String alarmSubIdUpdate;
+    private String alarmSubIdNew;
 
     private EditText etAlarmInputJudulfvbi;
     private CheckBox cbAlarmInputHariSeninfvbi;
@@ -80,6 +85,9 @@ public class AlarmActivity extends AppCompatActivity {
     private WheelHourPicker whpAlarmInputJamfvbi;
     private WheelMinutePicker whpAlarmInputMenitfvbi;
 
+    private String alarmId;
+    private int isActive;
+
     private CheckBox[] chkBoxs;
     private Integer[] chkBoxIds = {
             R.id.cbAlarmInputHariSenin,
@@ -103,6 +111,7 @@ public class AlarmActivity extends AppCompatActivity {
     private String alarmContactNo;
 
     private boolean isRecord = false;
+    private boolean isRecorded = false;
     private boolean isRecordPlay = false;
     private boolean doubleClickRecord = false;
     private MediaPlayer mPlayer;
@@ -111,6 +120,8 @@ public class AlarmActivity extends AppCompatActivity {
     private String ringtonePath;
     private String ringtoneTitle;
     private Uri ringtoneUri;
+
+    private boolean isUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,7 +176,53 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void initParam() {
+        Intent bundle = getIntent();
+        if (bundle.hasExtra(ISeasonConfig.INTENT_ID)) {
+            alarmId = bundle.getStringExtra(ISeasonConfig.INTENT_ID);
+            isActive = bundle.getIntExtra(ISeasonConfig.INTENT_ACTIVE, 0);
+            loadData(alarmId);
+            isUpdate = true;
+            Snackbar.make(findViewById(android.R.id.content), "Atur Ulang Kembali Jam & Menit Alarm", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        } else {
+            isUpdate = false;
+            alarmId = UUID.randomUUID().toString();
+        }
+    }
 
+    private void loadData(String alarmId) {
+        AlarmModel alarmModel = db.alarmGetOne(alarmId);
+        etAlarmInputJudulfvbi.setText(alarmModel.getAlarm_title());
+
+        alarmSubIdUpdate = alarmModel.getAlarm_sub_id();
+
+        currentHourString = alarmModel.getAlarm_hour();
+        whpAlarmInputJamfvbi.setDefault(currentHourString);
+        currentMinuteString = alarmModel.getAlarm_minute();
+
+        alarmContactName = alarmModel.getAlarm_friend();
+        alarmContactNo = alarmModel.getAlarm_friend_no();
+        if (!TextUtils.isEmpty(alarmContactName) && !TextUtils.isEmpty(alarmContactNo)) {
+            ivAlarmInputAddFriendfvbi.setVisibility(View.VISIBLE);
+        }
+
+        recordPath = alarmModel.getAlarm_voice_uri();
+        if (!TextUtils.isEmpty(recordPath)) {
+            ivAlarmInputVoicefvbi.setVisibility(View.VISIBLE);
+            ivAlarmInputVoicePlayStopfvbi.setVisibility(View.VISIBLE);
+        }
+
+        ringtoneTitle = alarmModel.getAlarm_ringtone();
+        ringtonePath = alarmModel.getAlarm_ringtone_uri();
+        if (!TextUtils.isEmpty(ringtoneTitle) && !TextUtils.isEmpty(ringtonePath)) {
+            ivAlarmInputRingtonefvbi.setVisibility(View.VISIBLE);
+        }
+
+        if (TextUtils.isEmpty(alarmModel.getAlarm_day())) {
+            ivAlarmInputOnceAlarmfvbi.setVisibility(View.VISIBLE);
+        } else {
+            ivAlarmInputOnceAlarmfvbi.setVisibility(View.GONE);
+            setCBCheck(alarmModel.getAlarm_day());
+        }
     }
 
     private void initSession() {
@@ -296,6 +353,7 @@ public class AlarmActivity extends AppCompatActivity {
 
                     //llAlarmInputVoicefvbi.setBackgroundColor(getResources().getColor(R.color.super_red));
                     isRecord = true;
+                    isRecorded = true;
                     Toast.makeText(getApplicationContext(), "Start Record", Toast.LENGTH_SHORT).show();
 
                     //tvAlarmInputVoicefvbi.setText("recording");
@@ -371,6 +429,27 @@ public class AlarmActivity extends AppCompatActivity {
 
     }
 
+    private void setCBCheck(String alarm_day) {
+        String[] days = alarm_day.split(",");
+        setCBCheckTrue(days, cbAlarmInputHariSeninfvbi,
+                cbAlarmInputHariSelasafvbi,
+                cbAlarmInputHariRabufvbi,
+                cbAlarmInputHariKamisfvbi,
+                cbAlarmInputHariJumatfvbi,
+                cbAlarmInputHariSabtufvbi,
+                cbAlarmInputHariMinggufvbi);
+    }
+
+    private void setCBCheckTrue(String[] days, CheckBox... checkBoxes) {
+        for (String day : days) {
+            for (CheckBox checkBox : checkBoxes) {
+                if (checkBox.getTag().toString().equalsIgnoreCase(day)) {
+                    checkBox.setChecked(true);
+                }
+            }
+        }
+    }
+
     private void setCBCheckFalse(CheckBox... checkBoxes) {
         for (CheckBox checkBox : checkBoxes) {
             checkBox.setChecked(false);
@@ -396,6 +475,19 @@ public class AlarmActivity extends AppCompatActivity {
             String tag = (String) cb.getTag();
             if (cb.isChecked()) {
                 strings.add(tag);
+            }
+        }
+
+        return ListArrayUtil.convertListStringToString(strings);
+    }
+
+    private String getTextFromCB(CheckBox... checkBoxes) {
+        List<String> strings = new ArrayList<>();
+        for (int i = 0; i < checkBoxes.length; i++) {
+            CheckBox cb = checkBoxes[i];
+            String text = (String) cb.getText();
+            if (cb.isChecked()) {
+                strings.add(text);
             }
         }
 
@@ -463,29 +555,28 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void stopDeleteRecord() {
-        if (isRecord) {
-            String s = VideoAudioUtil.stopRecording(recorder);
-            if (!TextUtils.isEmpty(s)) {
-                File file = new File(s);
-                if (file.exists()) {
-                    file.delete();
+        if (isRecorded) {
+            if (isRecord) {
+                String s = VideoAudioUtil.stopRecording(recorder);
+                if (!TextUtils.isEmpty(s)) {
+                    File file = new File(s);
+                    if (file.exists()) {
+                        file.delete();
+                    }
                 }
-            }
-        } else {
-            if (!TextUtils.isEmpty(recordPath)) {
-                File file = new File(recordPath);
-                if (file.exists()) {
-                    file.delete();
+            } else {
+                if (!TextUtils.isEmpty(recordPath)) {
+                    File file = new File(recordPath);
+                    if (file.exists()) {
+                        file.delete();
+                    }
                 }
             }
         }
     }
 
-    private void setAlarm() {
+    private void setSaveUpdateAlarm() {
 
-        StringBuilder alarmSubId = new StringBuilder();
-
-        String alarmId = UUID.randomUUID().toString();
         String alarmTitle = etAlarmInputJudulfvbi.getText().toString().trim();
 
         String s;
@@ -495,17 +586,18 @@ public class AlarmActivity extends AppCompatActivity {
             s = "dan sudah waktunya " + etAlarmInputJudulfvbi.getText().toString().trim() + " . ";
         }
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
+        /*Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("id", alarmId);
         intent.putExtra("title", "Notifikasi " + alarmTitle);
-        intent.putExtra("msg", "Hay Faisal . sekarang sudah jam " + currentHourString + ":" + currentMinuteString + " . " + s);
+        intent.putExtra("msg", "Hay Kamu.. sekarang sudah jam " + currentHourString + ":" + currentMinuteString + " . " + s);
         intent.putExtra("record", recordPath);
-        intent.putExtra("ringtone", ringtonePath);
+        intent.putExtra("ringtone", ringtonePath);*/
 
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -1);
-        long yesterday = calendar.getTimeInMillis();
+        long yesterday = calendar.getTimeInMillis();*/
 
-        List<String> stringsTag = getListTagFromCB(
+        List<String> tagsDay = getListTagFromCB(
                 cbAlarmInputHariSeninfvbi,
                 cbAlarmInputHariSelasafvbi,
                 cbAlarmInputHariRabufvbi,
@@ -516,7 +608,7 @@ public class AlarmActivity extends AppCompatActivity {
         );
 
         String alarmTagDayFromCB;
-        if (stringsTag.size() > 0) {
+        if (tagsDay.size() > 0) {
             alarmTagDayFromCB = getTagFromCB(
                     cbAlarmInputHariSeninfvbi,
                     cbAlarmInputHariSelasafvbi,
@@ -527,80 +619,91 @@ public class AlarmActivity extends AppCompatActivity {
                     cbAlarmInputHariMinggufvbi
             );
         } else {
-            alarmTagDayFromCB = "";
+            alarmTagDayFromCB = null;
         }
 
-        if (stringsTag.size() == 0) {
-            int reqCode = SystemUtil.getID();
+        String alarmTextDayFromCB;
+        if (tagsDay.size() > 0) {
+            alarmTextDayFromCB = getTextFromCB(
+                    cbAlarmInputHariSeninfvbi,
+                    cbAlarmInputHariSelasafvbi,
+                    cbAlarmInputHariRabufvbi,
+                    cbAlarmInputHariKamisfvbi,
+                    cbAlarmInputHariJumatfvbi,
+                    cbAlarmInputHariSabtufvbi,
+                    cbAlarmInputHariMinggufvbi
+            );
+        } else {
+            alarmTextDayFromCB = null;
+        }
+
+        if (tagsDay.size() != 0) {
+            for (int i = 0; i < tagsDay.size(); i++) {
+                int tagDay = Integer.parseInt(tagsDay.get(i));
+                Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity : " + i);
+                //int reqCode = SystemUtil.getID();
+                int reqCode = (int) System.currentTimeMillis() + i;
+
+                //PendingIntent pendingIntent = DateTimeAlarmUtil.setPendingIntentMakeAlarm(AlarmActivity.this, intent, reqCode);
+                //DateTimeAlarmUtil.setAlarmRepeatDay(AlarmActivity.this, pendingIntent, currentHour, currentMinute, tagDay);
+
+                if (i == (tagsDay.size() - 1)) {
+                    alarmSubIdStringBuilder.append(reqCode);
+                } else {
+                    alarmSubIdStringBuilder.append(reqCode + ",");
+                }
+            }
+        } else {
+            //int reqCode = SystemUtil.getID();
+            int reqCode = (int) System.currentTimeMillis();
+
             //PendingIntent pendingIntent = DateTimeAlarmUtil.setPendingIntentMakeAlarm(AlarmActivity.this, intent, reqCode);
             //DateTimeAlarmUtil.setAlarm(AlarmActivity.this, pendingIntent, currentHour, currentMinute);
 
-            alarmSubId.append(reqCode);
-        } else {
-            for (int i = 0; i < stringsTag.size(); i++) {
-                Log.d("Lihat", "setAlarm AlarmActivity : " + i);
-                int reqCode = SystemUtil.getID();
-                //PendingIntent pendingIntent = DateTimeAlarmUtil.setPendingIntentMakeAlarm(AlarmActivity.this, intent, reqCode);
-                //DateTimeAlarmUtil.setAlarmRepeatDay(AlarmActivity.this, pendingIntent, currentHour, currentMinute, q.intValue());
-
-                if (i == (stringsTag.size() - 1)) {
-                    alarmSubId.append(reqCode);
-                } else {
-                    alarmSubId.append(reqCode + ",");
-                }
-            }
+            alarmSubIdStringBuilder.append(reqCode);
         }
+        alarmSubIdNew = alarmSubIdStringBuilder.toString();
 
-       /* model.setAlarm_id(alarmId);
-        model.setAlarm_sub_id(alarmSubId.toString());
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmId : " + alarmId);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmSubIdUpdate : " + alarmSubIdNew);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmTitle : " + alarmTitle);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity currentHourString : " + currentHourString);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity currentMinuteString : " + currentMinuteString);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmTagDayFromCB : " + alarmTagDayFromCB);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmTextDayFromCB : " + alarmTextDayFromCB);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmContactName : " + alarmContactName);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity alarmContactNo : " + alarmContactNo);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity recordPath : " + recordPath);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity ringtoneTitle : " + ringtoneTitle);
+        Log.d("Lihat", "setSaveUpdateAlarm AlarmActivity ringtonePath : " + ringtonePath);
+
+        AlarmModel model = new AlarmModel();
+        model.setAlarm_id(alarmId);
+        model.setAlarm_sub_id(alarmSubIdNew);
         model.setAlarm_title(alarmTitle);
         model.setAlarm_hour(currentHourString);
         model.setAlarm_minute(currentMinuteString);
         model.setAlarm_day(alarmTagDayFromCB);
+        model.setAlarm_text_day(alarmTextDayFromCB);
         model.setAlarm_friend(alarmContactName);
         model.setAlarm_friend_no(alarmContactNo);
         model.setAlarm_voice_uri(recordPath);
         model.setAlarm_ringtone(ringtoneTitle);
         model.setAlarm_ringtone_uri(ringtonePath);
-        db.alarmSave(model);
 
-        LoginActivity.moveTo(AlarmActivity.this, AlarmSummaryActivity.class, true);*/
+        if (!isUpdate) {
+            db.alarmSave(model);
+            Snackbar.make(findViewById(android.R.id.content), "Set and Save Alarm Success", Snackbar.LENGTH_SHORT).show();
+        } else {
+            db.alarmUpdate(model, alarmId);
+            Snackbar.make(findViewById(android.R.id.content), "Set and Update Alarm Success", Snackbar.LENGTH_SHORT).show();
+        }
 
-        Toast.makeText(getApplicationContext(), "Set and Save Alarm Success", Toast.LENGTH_SHORT).show();
+        DateTimeAlarmUtil.setAlarmSwitch(getApplicationContext(), model, 1);
 
-        Log.d("Lihat", "setAlarm AlarmActivity alarmId : " + alarmId);
-        Log.d("Lihat", "setAlarm AlarmActivity alarmSubId : " + alarmSubId.toString());
-        Log.d("Lihat", "setAlarm AlarmActivity alarmTitle : " + alarmTitle);
-        Log.d("Lihat", "setAlarm AlarmActivity currentHourString : " + currentHourString);
-        Log.d("Lihat", "setAlarm AlarmActivity currentMinuteString : " + currentMinuteString);
-        Log.d("Lihat", "setAlarm AlarmActivity alarmTagDayFromCB : " + alarmTagDayFromCB);
-        Log.d("Lihat", "setAlarm AlarmActivity alarmContactName : " + alarmContactName);
-        Log.d("Lihat", "setAlarm AlarmActivity alarmContactNo : " + alarmContactNo);
-        Log.d("Lihat", "setAlarm AlarmActivity recordPath : " + recordPath);
-        Log.d("Lihat", "setAlarm AlarmActivity ringtoneTitle : " + ringtoneTitle);
-        Log.d("Lihat", "setAlarm AlarmActivity ringtonePath : " + ringtonePath);
-    }
+        finish();
+        overridePendingTransition(R.anim.fadein, R.anim.keluar_ke_bawah);
 
-    private void dialogQuit() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Are you sure to exit without save?");
-        alertDialogBuilder.setCancelable(false);
-        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                stopDeleteRecord();
-                finish();
-                overridePendingTransition(R.anim.fadein, R.anim.keluar_ke_bawah);
-            }
-        });
-        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-
-            }
-        });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 
     @Override
@@ -668,7 +771,11 @@ public class AlarmActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menuCheckActivity) {
-            setAlarm();
+            if (TextUtils.isEmpty(etAlarmInputJudulfvbi.getText().toString().trim())) {
+                InputValidUtil.errorET(etAlarmInputJudulfvbi, "empty field");
+            } else {
+                setSaveUpdateAlarm();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -681,7 +788,43 @@ public class AlarmActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        dialogQuit();
+        dialogBack();
+    }
+
+    private void dialogBack() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure to exit without save?");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                goBack();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void goBack() {
+        if (isUpdate) {
+            if (isActive == 0) {
+                DateTimeAlarmUtil.setAlarmSwitch(getApplicationContext(), db.alarmGetOne(alarmId), 0);
+                Snackbar.make(findViewById(android.R.id.content), "Alarm Deactived", Snackbar.LENGTH_SHORT).show();
+            } else {
+                DateTimeAlarmUtil.setAlarmSwitch(getApplicationContext(), db.alarmGetOne(alarmId), 1);
+                Snackbar.make(findViewById(android.R.id.content), "Alarm Actived", Snackbar.LENGTH_SHORT).show();
+            }
+        }
+
+        stopDeleteRecord();
+        finish();
+        overridePendingTransition(R.anim.fadein, R.anim.keluar_ke_bawah);
     }
 
     @Override

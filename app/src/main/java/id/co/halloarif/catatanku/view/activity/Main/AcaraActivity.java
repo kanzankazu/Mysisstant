@@ -1,6 +1,7 @@
 package id.co.halloarif.catatanku.view.activity.Main;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -171,6 +173,71 @@ public class AcaraActivity extends AppCompatActivity {
         initReminder();
     }
 
+    private void initListener() {
+        llAcaraInputLokasifvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AcaraActivity.this, PlacesAutoCompleteActivity.class);
+                if (locationLat != 0 && LocationLng != 0) {
+                    intent.putExtra(ISeasonConfig.INTENT_PARAM, locationLat);
+                    intent.putExtra(ISeasonConfig.INTENT_PARAM2, locationName);
+                }
+                startActivityForResult(intent, REQ_CODE_MAPS);
+                //finish();
+            }
+        });
+        llAcaraInputTemanfvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AcaraActivity.this, MemberPickerActivity.class);
+                startActivityForResult(intent, REQ_CODE_FRIEND);
+                //finish();
+            }
+        });
+
+        llAcaraInputRingtonefvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                startActivityForResult(intent, REQ_CODE_RINGTONE_PICKER);
+            }
+        });
+        llAcaraInputNotifikasiPopupfvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isPopup) {
+                    ivAcaraInputNotifikasiPopupfvbi.setVisibility(View.GONE);
+                    isPopup = false;
+                } else {
+                    ivAcaraInputNotifikasiPopupfvbi.setVisibility(View.VISIBLE);
+                    isPopup = true;
+                }
+            }
+        });
+        llAcaraInputGoogleVoicefvbi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isGoogleVoice) {
+                    ivAcaraInputGoogleVoicefvbi.setVisibility(View.GONE);
+                    isGoogleVoice = false;
+                } else {
+                    ivAcaraInputGoogleVoicefvbi.setVisibility(View.VISIBLE);
+                    isGoogleVoice = true;
+                }
+            }
+        });
+
+        cbAcaraInputEvaluasifvbi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isEvaluasi = true;
+            }
+        });
+    }
+
     private void initDatePicker(String HH, String mm) {
         Date currentDate = DateTimeUtil.getCurrentDate();
 
@@ -210,7 +277,6 @@ public class AcaraActivity extends AppCompatActivity {
     }
 
     private void initTimePicker(String HH, String mm) {
-
         initTimePickerStart(HH, mm);
         initTimePickerEnd(HH, mm);
 
@@ -353,8 +419,10 @@ public class AcaraActivity extends AppCompatActivity {
                 if (position == 0) {
                     // Set the hint text color gray
                     SystemUtil.changeColText(R.color.gray_light, tv);
+                    SystemUtil.changeColBackground(R.color.pink, tv);
                 } else {
-                    SystemUtil.changeColText(R.color.black, tv);
+                    SystemUtil.changeColText(R.color.white, tv);
+                    SystemUtil.changeColBackground(R.color.pink, tv);
                 }
                 return view;
             }
@@ -381,79 +449,8 @@ public class AcaraActivity extends AppCompatActivity {
         });
     }
 
-    private void initListener() {
-        llAcaraInputLokasifvbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AcaraActivity.this, PlacesAutoCompleteActivity.class);
-                if (locationLat != 0 && LocationLng != 0) {
-                    intent.putExtra(ISeasonConfig.INTENT_PARAM, locationLat);
-                    intent.putExtra(ISeasonConfig.INTENT_PARAM2, locationName);
-                }
-                startActivityForResult(intent, REQ_CODE_MAPS);
-                //finish();
-            }
-        });
-        llAcaraInputTemanfvbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AcaraActivity.this, MemberPickerActivity.class);
-                startActivityForResult(intent, REQ_CODE_FRIEND);
-                //finish();
-            }
-        });
-
-        llAcaraInputRingtonefvbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                startActivityForResult(intent, REQ_CODE_RINGTONE_PICKER);
-            }
-        });
-        llAcaraInputNotifikasiPopupfvbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isPopup) {
-                    ivAcaraInputNotifikasiPopupfvbi.setVisibility(View.GONE);
-                    isPopup = false;
-                } else {
-                    ivAcaraInputNotifikasiPopupfvbi.setVisibility(View.VISIBLE);
-                    isPopup = true;
-                }
-            }
-        });
-        llAcaraInputGoogleVoicefvbi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isGoogleVoice) {
-                    ivAcaraInputGoogleVoicefvbi.setVisibility(View.GONE);
-                    isGoogleVoice = false;
-                } else {
-                    ivAcaraInputGoogleVoicefvbi.setVisibility(View.VISIBLE);
-                    isGoogleVoice = true;
-                }
-            }
-        });
-
-        cbAcaraInputEvaluasifvbi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isEvaluasi = true;
-            }
-        });
-    }
-
     private void setAcara() {
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.masuk_dari_atas, R.anim.keluar_ke_bawah);
     }
 
     @Override
@@ -511,5 +508,36 @@ public class AcaraActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        dialogBack();
+    }
+
+    private void dialogBack() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure to exit without save?");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                goBack();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void goBack() {
+        finish();
+        overridePendingTransition(R.anim.masuk_dari_atas, R.anim.keluar_ke_bawah);
+
     }
 }

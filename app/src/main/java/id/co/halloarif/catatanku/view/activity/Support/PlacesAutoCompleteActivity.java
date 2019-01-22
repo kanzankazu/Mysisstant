@@ -3,6 +3,7 @@ package id.co.halloarif.catatanku.view.activity.Support;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -11,11 +12,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -227,9 +230,10 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
                             locationLng = places.get(0).getLatLng().longitude;
 
                             cvPlaceAutoCompleteDonefvbi.setVisibility(View.VISIBLE);
+                            ivPlaceAutoCompleteMarkerfvbi.setVisibility(View.VISIBLE);
                             tvPlaceAutoCompleteDoneLocNmfvbi.setText(locationName);
-                            tvPlaceAutoCompleteDoneLocLatfvbi.setText(locationLat+"");
-                            tvPlaceAutoCompleteDoneLocLngfvbi.setText(locationLng+"");
+                            tvPlaceAutoCompleteDoneLocLatfvbi.setText(locationLat + "");
+                            tvPlaceAutoCompleteDoneLocLngfvbi.setText(locationLng + "");
 
                         } else {
                             Toast.makeText(getApplicationContext(), PlacesAutoCompleteConstants.SOMETHING_WENT_WRONG, Toast.LENGTH_SHORT).show();
@@ -317,6 +321,34 @@ public class PlacesAutoCompleteActivity extends AppCompatActivity implements Goo
 
     @Override
     public void onBackPressed() {
+        if (!TextUtils.isEmpty(locationName)) {
+            dialogBack();
+        } else {
+            goBack();
+        }
+    }
+
+    private void dialogBack() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure to exit without save?");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                goBack();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void goBack() {
         Intent intent = new Intent();
         setResult(Activity.RESULT_CANCELED, intent);
         finish();

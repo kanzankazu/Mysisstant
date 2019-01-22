@@ -20,7 +20,6 @@
             android:id="@+id/ivMainBackground"
             android:layout_width="match_parent"
             android:layout_height="310dp"
-            android:layout_alignBottom="@+id/cvMainAlarm"
             android:elevation="-2dp"
             android:scaleType="centerCrop"
             android:src="@drawable/gallery_city" />
@@ -97,7 +96,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/Pink"
+                app:cardBackgroundColor="@color/pink"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp">
 
@@ -149,7 +148,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/Pink"
+                app:cardBackgroundColor="@color/pink"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="5dp">
 
@@ -200,7 +199,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="2dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="@color/Pink"
+                app:cardBackgroundColor="@color/pink"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="5dp">
 
@@ -267,6 +266,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="16dp"
-        tools:listitem="@layout/list_recent_note" />
+        tools:listitem="@layout/list_recent_alarm" />
 
 </LinearLayout>
