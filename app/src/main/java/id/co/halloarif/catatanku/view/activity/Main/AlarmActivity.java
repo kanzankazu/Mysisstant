@@ -122,6 +122,7 @@ public class AlarmActivity extends AppCompatActivity {
     private Uri ringtoneUri;
 
     private boolean isUpdate = false;
+    private boolean isSaveUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,8 +208,12 @@ public class AlarmActivity extends AppCompatActivity {
 
         recordPath = alarmModel.getAlarm_voice_uri();
         if (!TextUtils.isEmpty(recordPath)) {
-            ivAlarmInputVoicefvbi.setVisibility(View.VISIBLE);
-            ivAlarmInputVoicePlayStopfvbi.setVisibility(View.VISIBLE);
+            File file = new File(recordPath);
+            if (file.exists()) {
+                ivAlarmInputVoicefvbi.setVisibility(View.VISIBLE);
+                ivAlarmInputVoicePlayStopfvbi.setVisibility(View.VISIBLE);
+                recordPath = null;
+            }
         }
 
         ringtoneTitle = alarmModel.getAlarm_ringtone();
@@ -555,24 +560,27 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void stopDeleteRecord() {
-        if (isRecorded) {
-            if (isRecord) {
-                String s = VideoAudioUtil.stopRecording(recorder);
-                if (!TextUtils.isEmpty(s)) {
-                    File file = new File(s);
-                    if (file.exists()) {
-                        file.delete();
+        if (!isSaveUpdate) {
+            if (isRecorded) {
+                if (isRecord) {
+                    String s = VideoAudioUtil.stopRecording(recorder);
+                    if (!TextUtils.isEmpty(s)) {
+                        File file = new File(s);
+                        if (file.exists()) {
+                            file.delete();
+                        }
                     }
-                }
-            } else {
-                if (!TextUtils.isEmpty(recordPath)) {
-                    File file = new File(recordPath);
-                    if (file.exists()) {
-                        file.delete();
+                } else {
+                    if (!TextUtils.isEmpty(recordPath)) {
+                        File file = new File(recordPath);
+                        if (file.exists()) {
+                            file.delete();
+                        }
                     }
                 }
             }
         }
+
     }
 
     private void setSaveUpdateAlarm() {
@@ -700,6 +708,8 @@ public class AlarmActivity extends AppCompatActivity {
         }
 
         DateTimeAlarmUtil.setAlarmSwitch(getApplicationContext(), model, 1);
+
+        isSaveUpdate = true;
 
         finish();
         overridePendingTransition(R.anim.fadein, R.anim.keluar_ke_bawah);

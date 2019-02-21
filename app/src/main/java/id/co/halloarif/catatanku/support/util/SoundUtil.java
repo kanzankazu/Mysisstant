@@ -1,11 +1,7 @@
 package id.co.halloarif.catatanku.support.util;
 
-import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.media.AudioManager;
-
-import id.co.halloarif.catatanku.service.AlarmService;
 
 public class SoundUtil {
     public static int getVolume(Context activity, int streamType) {
@@ -67,7 +63,7 @@ public class SoundUtil {
         }
     }
 
-    public static int getRingerMode(Context activity, int ringMode) {
+    public static int getRingerMode(Context activity) {
         AudioManager audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
         return audioManager.getRingerMode();
     }

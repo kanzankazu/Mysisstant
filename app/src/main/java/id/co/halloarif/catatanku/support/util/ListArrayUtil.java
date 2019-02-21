@@ -50,11 +50,11 @@ public class ListArrayUtil {
         return arrayList;
     }
 
-    public static String[] convertStringToStringArray(String s) {
+    public static String[] convertStringToStringArrayComma(String s) {
         return s.split(",");
     }
 
-    public static List<String> convertStringToListString(String s) {
+    public static List<String> convertStringToListStringComma(String s) {
         String[] strings = s.split(",");
         return Arrays.asList(strings);
     }

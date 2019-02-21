@@ -517,6 +517,15 @@ public class DateTimeUtil {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR));
     }
 
+    public static boolean isSameDay(int dayOfWeek) {
+        Calendar calNow = Calendar.getInstance();
+        Calendar calSet = (Calendar) calNow.clone();
+
+        calSet.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+
+        return calNow.get(Calendar.DAY_OF_WEEK) == calSet.get(Calendar.DAY_OF_WEEK);
+    }
+
     public static boolean isToday(Date date) {
         return isSameDay(date, Calendar.getInstance().getTime());
     }
