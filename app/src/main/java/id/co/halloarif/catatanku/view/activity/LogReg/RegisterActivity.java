@@ -42,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
         etLogRegPassword2fvbi = (EditText) findViewById(R.id.etLogRegPassword2);
         bLogRegExecutefvbi = (CardView) findViewById(R.id.bLogRegExecute);
         tvLogRegNowLoginfvbi = (TextView) findViewById(R.id.tvLogRegNowLogin);
-
     }
 
     private void initParam() {

@@ -122,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
                 moveTo(LoginActivity.this, RegisterActivity.class, false);
             }
         });
-
         llLogRegGmailfvbi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,7 +149,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public static Intent moveTo(Activity activity, Class<?> targetClass, boolean isFinish) {
-
         Intent intent = new Intent(activity, targetClass);
         activity.startActivity(intent);
 
